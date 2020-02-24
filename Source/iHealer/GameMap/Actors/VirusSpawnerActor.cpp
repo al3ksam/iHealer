@@ -2,6 +2,7 @@
 
 
 #include "VirusSpawnerActor.h"
+#include "Components/BoxComponent.h"
 
 // Sets default values
 AVirusSpawnerActor::AVirusSpawnerActor()
@@ -9,6 +10,9 @@ AVirusSpawnerActor::AVirusSpawnerActor()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 
+	Area = CreateDefaultSubobject<UBoxComponent>(TEXT("Area"));
+
+	SetRootComponent(Area);
 }
 
 // Called when the game starts or when spawned
