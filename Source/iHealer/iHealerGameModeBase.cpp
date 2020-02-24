@@ -7,4 +7,6 @@
 AiHealerGameModeBase::AiHealerGameModeBase()
 {
 	PlayerControllerClass = AGameMapPlayerController::StaticClass();
+
+	
 }
