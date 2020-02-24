@@ -18,6 +18,8 @@ AGameMapVirusPawn::AGameMapVirusPawn()
 	Sprite = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Sprite"));
 	
 	Sprite->SetupAttachment(Sphere);
+
+
 }
 
 // Called every frame
