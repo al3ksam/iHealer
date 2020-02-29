@@ -5,29 +5,28 @@
 #include "Components/SphereComponent.h"
 #include "Components/InputComponent.h"
 #include "PaperFlipbookComponent.h"
-#include "GameFramework/Controller.h"
 
 // Sets default values
 AGameMapVirusPawn::AGameMapVirusPawn()
 {
+	bNewRotation = false;
+
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = false;
+	PrimaryActorTick.bCanEverTick = true;
 
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationRoll = false;
 	bUseControllerRotationYaw = false;
 
 	Sphere = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere"));
-
 	SetRootComponent(Sphere);
 
-	//Sphere->SetUsingAbsoluteRotation(true);
-
 	Sprite = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Sprite"));
-	
 	Sprite->SetupAttachment(Sphere);
 
-	UE_LOG(LogTemp, Warning, TEXT("AGameMapVirusPawn: %s"), *this->GetName());
+	RotationSpeed = 2.f;
+
+	SetActorRotation(FRotator(-90.f, 0, 0));
 }
 
 // Called every frame
@@ -35,6 +34,7 @@ void AGameMapVirusPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	UpdateRotation(DeltaTime);
 }
 
 // Called to bind functionality to input
@@ -52,21 +52,32 @@ void AGameMapVirusPawn::BeginPlay()
 	
 }
 
+void AGameMapVirusPawn::UpdateRotation(const float DeltaTime)
+{
+	if (!bNewRotation) return;
+
+	FRotator ActorRotation = GetActorRotation();
+
+	FRotator ActorNewRotation = FRotator(90.0f, 0, 0);
+
+	bool bRotateCompleted = ActorRotation.Pitch >= ActorNewRotation.Pitch || ActorRotation.Pitch >= ActorNewRotation.Pitch - 1.0f;
+
+	UE_LOG(LogTemp, Warning, TEXT("%s"), *(ActorRotation.ToString() + " | " + ActorNewRotation.ToString() + " | " + FString::FromInt(static_cast<int32>(bRotateCompleted))));
+
+	if (bRotateCompleted)
+	{
+		bNewRotation = false;
+
+		UE_LOG(LogTemp, Warning, TEXT("Stopped"));
+
+		return;
+	}
+	
+	FRotator ActorRotationTemp = FMath::RInterpTo(ActorRotation, ActorNewRotation, DeltaTime, this->RotationSpeed);
+	this->SetActorRotation(ActorRotationTemp);
+}
+
 void AGameMapVirusPawn::OnTouch()
 {
-	FRotator r1 = this->GetActorRotation();
-
-
-	UE_LOG(LogTemp, Warning, TEXT("%s"), *r1.ToString());
-
-	this->SetActorRotation(FRotator(10.0f, 0.0f, 0.0f));
-
-	FRotator r2 = this->GetActorRotation();
-
-
-	UE_LOG(LogTemp, Warning, TEXT("* %s"), *r2.ToString());
-
-	UE_LOG(LogTemp, Warning, TEXT("%s"), *Controller->GetClass()->GetFullName());
-
-	UE_LOG(LogTemp, Warning, TEXT("%s"), *Controller->GetPawn()->GetClass()->GetFullName());
+	bNewRotation = true;
 }

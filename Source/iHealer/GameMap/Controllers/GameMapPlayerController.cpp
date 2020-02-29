@@ -9,7 +9,6 @@
 
 AGameMapPlayerController::AGameMapPlayerController()
 {
-	this->bTouched = false;
 }
 
 void AGameMapPlayerController::BeginPlay()
@@ -22,16 +21,11 @@ bool AGameMapPlayerController::InputTouch(uint32 Handle, ETouchType::Type Type,
 {
 	Super::InputTouch(Handle, Type, TouchLocation, Force, DeviceTimestamp, TouchpadIndex);
 
-	if (!bTouched)
-	{
 
-		for (TActorIterator<AGameMapVirusPawn> VirusPawn(GetWorld()); VirusPawn; ++VirusPawn)
-		{
-			VirusPawn->OnTouch();
-		}
-		
-		bTouched = true;
-	}	
+	for (TActorIterator<AGameMapVirusPawn> VirusPawn(GetWorld()); VirusPawn; ++VirusPawn)
+	{
+		VirusPawn->OnTouch();
+	}
 
 	return false;
 }

@@ -28,8 +28,16 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(VisibleAnywhere)
-	class USphereComponent* Sphere;
+	class USphereComponent* Sphere; 
 
 	UPROPERTY(VisibleAnywhere)
 	class UPaperFlipbookComponent* Sprite;
+
+	UPROPERTY(EditAnywhere, Category="Pawn", Meta = (DisplayName = "Rotation speed", ClampMin="1.0", ClampMax="10.0"))
+	float RotationSpeed;
+
+private:
+	void UpdateRotation(const float DeltaTime);
+
+	bool bNewRotation; 
 };
