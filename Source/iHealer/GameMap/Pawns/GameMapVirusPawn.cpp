@@ -20,13 +20,16 @@ AGameMapVirusPawn::AGameMapVirusPawn()
 
 	Sphere = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere"));
 	SetRootComponent(Sphere);
+	Sphere->BodyInstance.bLockYTranslation = true;
+	Sphere->SetSimulatePhysics(true);
+	Sphere->SetEnableGravity(false);
 
 	Sprite = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Sprite"));
 	Sprite->SetupAttachment(Sphere);
 
 	RotationSpeed = 2.f;
 
-	SetActorRotation(FRotator(-90.f, 0, 0));
+	SetActorRotation(FRotator(-90.f, 0.0f, 0.0f));
 }
 
 // Called every frame
@@ -58,7 +61,7 @@ void AGameMapVirusPawn::UpdateRotation(const float DeltaTime)
 
 	FRotator ActorRotation = GetActorRotation();
 
-	FRotator ActorNewRotation = FRotator(90.0f, 0, 0);
+	FRotator ActorNewRotation = FRotator(90.0f, 180.0f, 180.0f);
 
 	bool bRotateCompleted = ActorRotation.Pitch >= ActorNewRotation.Pitch || ActorRotation.Pitch >= ActorNewRotation.Pitch - 1.0f;
 
