@@ -22,6 +22,7 @@ AGameMapVirusPawn::AGameMapVirusPawn()
 	SetRootComponent(Sphere);
 	Sphere->BodyInstance.bLockYTranslation = true;
 	Sphere->SetSimulatePhysics(true);
+	Sphere->SetMassOverrideInKg(NAME_None, 10.0f);
 	Sphere->SetEnableGravity(false);
 
 	Sprite = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Sprite"));

@@ -1,10 +1,15 @@
 // Copyright 1998-2020 Epic Games, Inc. All Rights Reserved.
 
 #include "GameMapCamera.h"
+#include "Camera/CameraComponent.h"
 #include "Kismet/GameplayStatics.h"
 
 AGameMapCamera::AGameMapCamera()
 {
+	UCameraComponent* GameMapCameraComponent = this->GetCameraComponent();
+	GameMapCameraComponent->ProjectionMode = ECameraProjectionMode::Orthographic;
+	GameMapCameraComponent->OrthoWidth = 1024.0f;
+	GameMapCameraComponent->bConstrainAspectRatio = false;
 }
 
 void AGameMapCamera::BeginPlay()
