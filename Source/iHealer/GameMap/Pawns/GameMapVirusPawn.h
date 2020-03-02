@@ -39,5 +39,5 @@ protected:
 private:
 	void UpdateRotation(const float DeltaTime = (0.f));
 
-	bool bNewRotation;
+	bool bNewRotation_;
 };
