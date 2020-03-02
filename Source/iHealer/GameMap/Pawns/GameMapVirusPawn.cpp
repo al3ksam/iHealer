@@ -41,7 +41,7 @@ void AGameMapVirusPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	UpdateRotation();
+	UpdateRotation(DeltaTime);
 }
 
 // Called to bind functionality to input

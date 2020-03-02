@@ -37,7 +37,8 @@ protected:
 	float RotationSpeed;
 
 private:
-	void UpdateRotation(const float DeltaTime = (0.f));
+	// Update Pawn rotation if he have new rotation
+	void UpdateRotation(const float DeltaTime);
 
 	bool bNewRotation_;
 };
