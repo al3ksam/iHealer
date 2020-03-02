@@ -37,7 +37,7 @@ protected:
 	float RotationSpeed;
 
 private:
-	void UpdateRotation(const float DeltaTime);
+	void UpdateRotation(const float DeltaTime = (0.f));
 
-	bool bNewRotation; 
+	bool bNewRotation;
 };
