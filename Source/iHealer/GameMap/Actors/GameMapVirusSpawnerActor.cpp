@@ -11,7 +11,6 @@ AGameMapVirusSpawnerActor::AGameMapVirusSpawnerActor()
 	PrimaryActorTick.bCanEverTick = false;
 
 	Area = CreateDefaultSubobject<UBoxComponent>(TEXT("Area"));
-
 	SetRootComponent(Area);
 }
 

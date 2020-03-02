@@ -14,13 +14,16 @@ AGameMapVirusPawn::AGameMapVirusPawn()
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	// Ignore the rotation from the controller
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationRoll = false;
 	bUseControllerRotationYaw = false;
 
 	Sphere = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere"));
 	SetRootComponent(Sphere);
-	Sphere->BodyInstance.bLockYTranslation = true;
+	Sphere->BodyInstance.bLockYTranslation = true; // 2D-translation (XZ-axis)
+
+	// Configure Pawn physics
 	Sphere->SetSimulatePhysics(true);
 	Sphere->SetMassOverrideInKg(NAME_None, 10.0f);
 	Sphere->SetEnableGravity(false);
@@ -38,7 +41,7 @@ void AGameMapVirusPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	UpdateRotation(DeltaTime);
+	UpdateRotation();
 }
 
 // Called to bind functionality to input
@@ -56,6 +59,7 @@ void AGameMapVirusPawn::BeginPlay()
 	
 }
 
+// Update Pawn rotation if he have new rotation
 void AGameMapVirusPawn::UpdateRotation(const float DeltaTime)
 {
 	if (!bNewRotation) return;
