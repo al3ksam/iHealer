@@ -9,7 +9,7 @@
 // Sets default values
 AGameMapVirusPawn::AGameMapVirusPawn()
 {
-	bNewRotation = false;
+	bNewRotation_ = false;
 
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -62,7 +62,7 @@ void AGameMapVirusPawn::BeginPlay()
 // Update Pawn rotation if he have new rotation
 void AGameMapVirusPawn::UpdateRotation(const float DeltaTime)
 {
-	if (!bNewRotation) return;
+	if (!bNewRotation_) return;
 
 	FRotator ActorRotation = GetActorRotation();
 
@@ -74,7 +74,7 @@ void AGameMapVirusPawn::UpdateRotation(const float DeltaTime)
 
 	if (bRotateCompleted)
 	{
-		bNewRotation = false;
+		bNewRotation_ = false;
 
 		UE_LOG(LogTemp, Warning, TEXT("Stopped"));
 
@@ -87,5 +87,5 @@ void AGameMapVirusPawn::UpdateRotation(const float DeltaTime)
 
 void AGameMapVirusPawn::OnTouch()
 {
-	bNewRotation = true;
+	bNewRotation_ = true;
 }
