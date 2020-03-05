@@ -32,6 +32,8 @@ AGameMapVirusPawn::AGameMapVirusPawn()
 	RotationSpeed = 2.f;
 
 	SetActorRotation(FRotator(-90.f, 0.0f, 0.0f));
+
+	Rotate();
 }
 
 // Called every frame
@@ -56,5 +58,8 @@ void AGameMapVirusPawn::BeginPlay()
 
 void AGameMapVirusPawn::Rotate()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Rotate"));
+	UE_LOG(LogTemp, Warning, TEXT("Rotate %s : %s"), 
+		*FString::SanitizeFloat(AGameMapVirusPawn::MIN_SPEED_ROTATION),
+		*FString::SanitizeFloat(AGameMapVirusPawn::MAX_SPEED_ROTATION)
+	);
 }
