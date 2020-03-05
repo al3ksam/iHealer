@@ -12,6 +12,9 @@ class IHEALER_API AGameMapVirusPawn : public APawn
 	GENERATED_BODY()
 
 public:
+	static constexpr float getMinSpeedRotation();
+	static constexpr float getMaxSpeedRotation();
+
 	// Sets default values for this pawn's properties
 	AGameMapVirusPawn();
 
@@ -20,9 +23,6 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	static constexpr float MIN_SPEED_ROTATION = 1.0f;
-	static constexpr float MAX_SPEED_ROTATION = 10.0f;
 
 protected:
 	// Called when the game starts or when spawned
@@ -38,5 +38,8 @@ protected:
 	float RotationSpeed;
 
 private:
+	static constexpr float MIN_SPEED_ROTATION_ = 1.0f;
+	static constexpr float MAX_SPEED_ROTATION_ = 10.0f;
+
 	void Rotate();
 };

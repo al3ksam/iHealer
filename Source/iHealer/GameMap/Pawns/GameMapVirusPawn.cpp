@@ -6,6 +6,16 @@
 #include "Components/InputComponent.h"
 #include "PaperFlipbookComponent.h"
 
+constexpr float AGameMapVirusPawn::getMinSpeedRotation()
+{
+	return AGameMapVirusPawn::MIN_SPEED_ROTATION_;
+}
+
+constexpr float AGameMapVirusPawn::getMaxSpeedRotation()
+{
+	return AGameMapVirusPawn::MAX_SPEED_ROTATION_;
+}
+
 // Sets default values
 AGameMapVirusPawn::AGameMapVirusPawn()
 {
@@ -59,7 +69,7 @@ void AGameMapVirusPawn::BeginPlay()
 void AGameMapVirusPawn::Rotate()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Rotate %s : %s"), 
-		*FString::SanitizeFloat(AGameMapVirusPawn::MIN_SPEED_ROTATION),
-		*FString::SanitizeFloat(AGameMapVirusPawn::MAX_SPEED_ROTATION)
+		*FString::SanitizeFloat(AGameMapVirusPawn::getMinSpeedRotation()),
+		*FString::SanitizeFloat(AGameMapVirusPawn::getMaxSpeedRotation())
 	);
 }
