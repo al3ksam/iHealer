@@ -16,8 +16,4 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
-
-	virtual bool InputTouch(uint32 Handle, ETouchType::Type Type, const FVector2D& TouchLocation,
-		float Force, FDateTime DeviceTimestamp, uint32 TouchpadIndex
-	) override;
 };

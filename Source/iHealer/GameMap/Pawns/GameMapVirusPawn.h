@@ -21,8 +21,6 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	void OnTouch();
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -37,8 +35,5 @@ protected:
 	float RotationSpeed;
 
 private:
-	// Update Pawn rotation if he have new rotation
-	void UpdateRotation(const float DeltaTime);
-
-	bool bNewRotation_;
+	void Rotate();
 };
