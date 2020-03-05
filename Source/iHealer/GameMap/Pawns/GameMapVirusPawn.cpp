@@ -32,8 +32,6 @@ AGameMapVirusPawn::AGameMapVirusPawn()
 	RotationSpeed = 2.f;
 
 	SetActorRotation(FRotator(-90.f, 0.0f, 0.0f));
-
-
 }
 
 // Called every frame
