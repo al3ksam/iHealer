@@ -15,17 +15,3 @@ void AGameMapPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 }
-
-bool AGameMapPlayerController::InputTouch(uint32 Handle, ETouchType::Type Type, 
-	const FVector2D& TouchLocation, float Force, FDateTime DeviceTimestamp, uint32 TouchpadIndex)
-{
-	Super::InputTouch(Handle, Type, TouchLocation, Force, DeviceTimestamp, TouchpadIndex);
-
-
-	for (TActorIterator<AGameMapVirusPawn> VirusPawn(GetWorld()); VirusPawn; ++VirusPawn)
-	{
-		VirusPawn->OnTouch();
-	}
-
-	return false;
-}
