@@ -16,8 +16,8 @@ public:
 	static constexpr float getMaxSpeedRotation();
 
 private:
-	static constexpr float MIN_SPEED_ROTATION_ = 1.0f;
-	static constexpr float MAX_SPEED_ROTATION_ = 10.0f;
+	static constexpr float MIN_SPEED_ROTATION_ { 1.0f };
+	static constexpr float MAX_SPEED_ROTATION_ { 10.0f };
 
 public:
 	// Sets default values for this pawn's properties
