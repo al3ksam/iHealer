@@ -15,5 +15,19 @@ public:
 	AGameMapPlayerController();
 
 protected:
+	// Called when the game starts
 	virtual void BeginPlay() override;
+
+	// Test functionality game on touch
+	virtual bool InputTouch(
+		uint32 Handle, 
+		ETouchType::Type Type, 
+		const FVector2D& TouchLocation,
+		float Force,
+		FDateTime DeviceTimestamp,
+		uint32 TouchpadIndex
+	) override;
+
+private:
+	bool bTouched { false };
 };

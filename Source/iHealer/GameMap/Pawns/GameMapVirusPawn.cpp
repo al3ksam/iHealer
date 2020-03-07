@@ -5,6 +5,7 @@
 #include "Components/SphereComponent.h"
 #include "Components/InputComponent.h"
 #include "PaperFlipbookComponent.h"
+#include "TimerManager.h"
 
 constexpr float AGameMapVirusPawn::getMinSpeedRotation()
 {
@@ -42,8 +43,6 @@ AGameMapVirusPawn::AGameMapVirusPawn()
 	RotationSpeed = 2.f;
 
 	SetActorRotation(FRotator(-90.f, 0.0f, 0.0f));
-
-	Rotate();
 }
 
 // Called every frame
@@ -64,12 +63,24 @@ void AGameMapVirusPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 void AGameMapVirusPawn::BeginPlay()
 {
 	Super::BeginPlay();
+
+	GetWorld()->GetTimerManager().SetTimer(this->RotationTimerHandle_, this, &AGameMapVirusPawn::Rotate, 2.f, true);
 }
 
+// Called when a Pawn is being removed
+void AGameMapVirusPawn::EndPlay(EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+
+	GetWorld()->GetTimerManager().ClearTimer(this->RotationTimerHandle_);
+
+	UE_LOG(LogTemp, Warning, TEXT("EndPlay() for %s"), *this->GetName());
+}
+
+// Change the Pawn rotation
 void AGameMapVirusPawn::Rotate()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Rotate %s : %s"), 
-		*FString::SanitizeFloat(AGameMapVirusPawn::getMinSpeedRotation()),
-		*FString::SanitizeFloat(AGameMapVirusPawn::getMaxSpeedRotation())
+	UE_LOG(LogTemp, Warning, TEXT("Rotate %s"),
+		*this->GetName()
 	);
 }

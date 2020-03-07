@@ -33,6 +33,9 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	// Called when a Pawn is being removed
+	virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;
+
 	UPROPERTY(VisibleAnywhere)
 	class USphereComponent* Sphere; 
 
@@ -43,5 +46,8 @@ protected:
 	float RotationSpeed;
 
 private:
+	// Change Pawn rotation
 	void Rotate();
+
+	FTimerHandle RotationTimerHandle_;
 };
