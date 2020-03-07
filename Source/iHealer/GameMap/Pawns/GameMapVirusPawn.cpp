@@ -55,8 +55,6 @@ void AGameMapVirusPawn::Tick(float DeltaTime)
 void AGameMapVirusPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-	UE_LOG(LogTemp, Warning, TEXT("Setup PI"));
 }
 
 // Called when the game starts or when spawned
@@ -64,6 +62,7 @@ void AGameMapVirusPawn::BeginPlay()
 {
 	Super::BeginPlay();
 
+	// Start to rotate the Pawn
 	GetWorld()->GetTimerManager().SetTimer(this->RotationTimerHandle_, this, &AGameMapVirusPawn::Rotate, 2.f, true);
 }
 
@@ -72,12 +71,11 @@ void AGameMapVirusPawn::EndPlay(EEndPlayReason::Type EndPlayReason)
 {
 	Super::EndPlay(EndPlayReason);
 
+	// Stop to rotate the Pawn
 	GetWorld()->GetTimerManager().ClearTimer(this->RotationTimerHandle_);
-
-	UE_LOG(LogTemp, Warning, TEXT("EndPlay() for %s"), *this->GetName());
 }
 
-// Change the Pawn rotation
+// Change a Pawn rotation
 void AGameMapVirusPawn::Rotate()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Rotate %s"),

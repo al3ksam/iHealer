@@ -13,6 +13,7 @@ AGameMapCamera::AGameMapCamera()
 	GameMapCameraComponent->bConstrainAspectRatio = false;
 }
 
+// Called when the game starts or when spawned
 void AGameMapCamera::BeginPlay()
 {
 	Super::BeginPlay();

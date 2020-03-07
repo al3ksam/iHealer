@@ -46,7 +46,7 @@ protected:
 	float RotationSpeed;
 
 private:
-	// Change Pawn rotation
+	// Change a Pawn rotation
 	void Rotate();
 
 	FTimerHandle RotationTimerHandle_;

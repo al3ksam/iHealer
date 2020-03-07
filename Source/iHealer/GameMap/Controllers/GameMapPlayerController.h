@@ -15,7 +15,7 @@ public:
 	AGameMapPlayerController();
 
 protected:
-	// Called when the game starts
+	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	// Test functionality game on touch

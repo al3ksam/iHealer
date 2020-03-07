@@ -9,12 +9,13 @@ AGameMapPlayerController::AGameMapPlayerController()
 {
 }
 
-// Called when the game starts
+// Called when the game starts or when spawned
 void AGameMapPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 }
 
+// Test functionality game on touch
 bool AGameMapPlayerController::InputTouch(
 	uint32 Handle, 
 	ETouchType::Type Type, 
