@@ -32,11 +32,6 @@ AGameMapVirusPawn::AGameMapVirusPawn()
 	SetRootComponent(Sphere);
 	Sphere->BodyInstance.bLockYTranslation = true; // 2D-translation (XZ-axis)
 
-	// Configure Pawn physics
-	Sphere->SetSimulatePhysics(true);
-	Sphere->SetMassOverrideInKg(NAME_None, 10.0f);
-	Sphere->SetEnableGravity(false);
-
 	Sprite = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Sprite"));
 	Sprite->SetupAttachment(Sphere);
 
@@ -55,6 +50,17 @@ void AGameMapVirusPawn::Tick(float DeltaTime)
 void AGameMapVirusPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+}
+
+// Called after the actor's components have been initialized
+void AGameMapVirusPawn::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	// Configure Pawn physics
+	Sphere->SetSimulatePhysics(true);
+	Sphere->SetMassOverrideInKg(NAME_None, 10.0f);
+	Sphere->SetEnableGravity(false);
 }
 
 // Called when the game starts or when spawned
