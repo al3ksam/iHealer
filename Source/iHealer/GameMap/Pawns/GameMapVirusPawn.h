@@ -12,14 +12,6 @@ class IHEALER_API AGameMapVirusPawn : public APawn
 	GENERATED_BODY()
 
 public:
-	static constexpr float getMinSpeedRotation();
-	static constexpr float getMaxSpeedRotation();
-
-private:
-	static constexpr float MIN_SPEED_ROTATION_ { 1.0f };
-	static constexpr float MAX_SPEED_ROTATION_ { 10.0f };
-
-public:
 	// Sets default values for this pawn's properties
 	AGameMapVirusPawn();
 
@@ -44,9 +36,6 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	class UPaperFlipbookComponent* Sprite;
-
-	UPROPERTY(EditAnywhere, Category="Pawn", Meta = (DisplayName = "Rotation speed", ClampMin="1.0", ClampMax="10.0"))
-	float RotationSpeed;
 
 private:
 	// Change a Pawn rotation
