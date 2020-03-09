@@ -38,6 +38,9 @@ protected:
 	class UPaperFlipbookComponent* Sprite;
 
 private:
+	void EnableAutoRotate();
+	void DisableAutoRotate();
+
 	// Change a Pawn rotation
 	void Rotate();
 

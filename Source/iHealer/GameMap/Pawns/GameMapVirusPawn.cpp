@@ -56,8 +56,7 @@ void AGameMapVirusPawn::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// Start to rotate the Pawn
-	GetWorld()->GetTimerManager().SetTimer(this->RotationTimerHandle_, this, &AGameMapVirusPawn::Rotate, 0.04f, true);
+	this->EnableAutoRotate();
 }
 
 // Called when a Pawn is being removed
@@ -65,6 +64,50 @@ void AGameMapVirusPawn::EndPlay(EEndPlayReason::Type EndPlayReason)
 {
 	Super::EndPlay(EndPlayReason);
 
+	this->DisableAutoRotate();
+}
+
+void AGameMapVirusPawn::EnableAutoRotate()
+{
+	// Random rotation speed
+	const enum ERotationSpeedIndex
+	{
+		NORMAL,
+		FASTER,
+		VERY_FAST
+	} RotationSpeedIndex = static_cast<ERotationSpeedIndex>(
+		FMath::RandRange(ERotationSpeedIndex::NORMAL, ERotationSpeedIndex::VERY_FAST)
+	);
+
+	float RotationSpeed = 0.f;
+	
+	switch (RotationSpeedIndex)
+	{
+	case ERotationSpeedIndex::NORMAL:
+		RotationSpeed = 0.04f;
+		break;
+
+	case ERotationSpeedIndex::FASTER:
+		RotationSpeed = 0.02f;
+		break;
+
+	case ERotationSpeedIndex::VERY_FAST:
+		RotationSpeed = 0.01f;
+		break;
+	}
+
+	UE_LOG(LogTemp, Warning, TEXT("Rotation speed of %s: %s"),
+		*this->GetName(),
+		*FString::FromInt(RotationSpeedIndex)
+	);
+	
+
+	// Start to rotate the Pawn
+	GetWorld()->GetTimerManager().SetTimer(this->RotationTimerHandle_, this, &AGameMapVirusPawn::Rotate, RotationSpeed, true);
+}
+
+void AGameMapVirusPawn::DisableAutoRotate()
+{
 	// Stop to rotate the Pawn
 	GetWorld()->GetTimerManager().ClearTimer(this->RotationTimerHandle_);
 }
@@ -72,18 +115,5 @@ void AGameMapVirusPawn::EndPlay(EEndPlayReason::Type EndPlayReason)
 // Change a Pawn rotation
 void AGameMapVirusPawn::Rotate()
 {
-	float RotationDelta = 1.f;
-
-	FRotator CurrentRotation = this->GetActorRotation();
-
-	
-
-	FRotator NewRotation = FRotator(CurrentRotation.Pitch + RotationDelta, CurrentRotation.Yaw, CurrentRotation.Roll);
-
-	this->SetActorRotation(NewRotation);
-
-	UE_LOG(LogTemp, Warning, TEXT("%s: %s"),
-		*this->GetName(),
-		*FRotator(this->GetActorRotation()).ToString()
-	);
+	this->AddActorLocalRotation(FRotator(1.f, 0.f, 0.f));
 }
