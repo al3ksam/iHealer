@@ -70,15 +70,14 @@ void AGameMapVirusPawn::EndPlay(EEndPlayReason::Type EndPlayReason)
 void AGameMapVirusPawn::EnableAutoRotate()
 {
 	// Rotation speeds
-	TArray<float> const RSpeeds = {
+	TArray<float> const RSpeeds {
 		0.04f, // NORMAL
 		0.02f, // FASTER
 		0.01f  // VERY FAST
 	};
 
 	// Get random index of the rotation speed
-	const enum ERotationSpeedIndex
-	{
+	const enum ERotationSpeedIndex {
 		NORMAL,
 		FASTER,
 		VERY_FAST
