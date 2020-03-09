@@ -69,7 +69,14 @@ void AGameMapVirusPawn::EndPlay(EEndPlayReason::Type EndPlayReason)
 
 void AGameMapVirusPawn::EnableAutoRotate()
 {
-	// Random rotation speed
+	// Rotation speeds
+	TArray<float> const RSpeeds = {
+		0.04f, // NORMAL
+		0.02f, // FASTER
+		0.01f  // VERY FAST
+	};
+
+	// Get random index of the rotation speed
 	const enum ERotationSpeedIndex
 	{
 		NORMAL,
@@ -79,28 +86,12 @@ void AGameMapVirusPawn::EnableAutoRotate()
 		FMath::RandRange(ERotationSpeedIndex::NORMAL, ERotationSpeedIndex::VERY_FAST)
 	);
 
-	float RotationSpeed = 0.f;
-	
-	switch (RotationSpeedIndex)
-	{
-	case ERotationSpeedIndex::NORMAL:
-		RotationSpeed = 0.04f;
-		break;
-
-	case ERotationSpeedIndex::FASTER:
-		RotationSpeed = 0.02f;
-		break;
-
-	case ERotationSpeedIndex::VERY_FAST:
-		RotationSpeed = 0.01f;
-		break;
-	}
+	float RotationSpeed = RSpeeds[RotationSpeedIndex];
 
 	UE_LOG(LogTemp, Warning, TEXT("Rotation speed of %s: %s"),
 		*this->GetName(),
 		*FString::FromInt(RotationSpeedIndex)
 	);
-	
 
 	// Start to rotate the Pawn
 	GetWorld()->GetTimerManager().SetTimer(this->RotationTimerHandle_, this, &AGameMapVirusPawn::Rotate, RotationSpeed, true);
