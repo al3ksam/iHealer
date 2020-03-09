@@ -7,16 +7,6 @@
 #include "PaperFlipbookComponent.h"
 #include "TimerManager.h"
 
-constexpr float AGameMapVirusPawn::getMinSpeedRotation()
-{
-	return AGameMapVirusPawn::MIN_SPEED_ROTATION_;
-}
-
-constexpr float AGameMapVirusPawn::getMaxSpeedRotation()
-{
-	return AGameMapVirusPawn::MAX_SPEED_ROTATION_;
-}
-
 // Sets default values
 AGameMapVirusPawn::AGameMapVirusPawn()
 {
@@ -34,8 +24,6 @@ AGameMapVirusPawn::AGameMapVirusPawn()
 
 	Sprite = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Sprite"));
 	Sprite->SetupAttachment(Sphere);
-
-	RotationSpeed = 2.f;
 
 	SetActorRotation(FRotator(-90.f, 0.0f, 0.0f));
 }
@@ -69,7 +57,7 @@ void AGameMapVirusPawn::BeginPlay()
 	Super::BeginPlay();
 
 	// Start to rotate the Pawn
-	GetWorld()->GetTimerManager().SetTimer(this->RotationTimerHandle_, this, &AGameMapVirusPawn::Rotate, 2.f, true);
+	GetWorld()->GetTimerManager().SetTimer(this->RotationTimerHandle_, this, &AGameMapVirusPawn::Rotate, 0.04f, true);
 }
 
 // Called when a Pawn is being removed
@@ -84,7 +72,18 @@ void AGameMapVirusPawn::EndPlay(EEndPlayReason::Type EndPlayReason)
 // Change a Pawn rotation
 void AGameMapVirusPawn::Rotate()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Rotate %s"),
-		*this->GetName()
+	float RotationDelta = 1.f;
+
+	FRotator CurrentRotation = this->GetActorRotation();
+
+	
+
+	FRotator NewRotation = FRotator(CurrentRotation.Pitch + RotationDelta, CurrentRotation.Yaw, CurrentRotation.Roll);
+
+	this->SetActorRotation(NewRotation);
+
+	UE_LOG(LogTemp, Warning, TEXT("%s: %s"),
+		*this->GetName(),
+		*FRotator(this->GetActorRotation()).ToString()
 	);
 }
