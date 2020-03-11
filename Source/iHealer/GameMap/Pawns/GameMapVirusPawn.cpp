@@ -93,7 +93,8 @@ void AGameMapVirusPawn::EnableAutoRotate()
 	);
 
 	// Start to rotate the Pawn
-	GetWorld()->GetTimerManager().SetTimer(this->RotationTimerHandle_, this, &AGameMapVirusPawn::Rotate, RotationSpeed, true);
+	GetWorld()->GetTimerManager()
+		.SetTimer(this->RotationTimerHandle_, this, &AGameMapVirusPawn::Rotate, RotationSpeed, true);
 }
 
 void AGameMapVirusPawn::DisableAutoRotate()
