@@ -32,6 +32,7 @@ void AGameMapDestructionArea::BeginPlay()
 	Area->OnComponentBeginOverlap.AddDynamic(this, &AGameMapDestructionArea::OnOverlap);
 }
 
+// Called when any object overlap this actor
 void AGameMapDestructionArea::OnOverlap(
 	UPrimitiveComponent* DestructionArea, AActor* Actor, UPrimitiveComponent* ActorComponent,
 	int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
