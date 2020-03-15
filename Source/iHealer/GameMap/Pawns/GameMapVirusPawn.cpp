@@ -11,7 +11,7 @@
 AGameMapVirusPawn::AGameMapVirusPawn()
 {
  	// Set this pawn to call Tick() every frame.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 	// Ignore the rotation from the controller
 	bUseControllerRotationPitch = false;
