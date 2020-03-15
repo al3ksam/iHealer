@@ -7,7 +7,7 @@
 // Sets default values
 AGameMapVirusSpawnerActor::AGameMapVirusSpawnerActor()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+ 	// Set this actor to call Tick() every frame. 
 	PrimaryActorTick.bCanEverTick = false;
 
 	// Setting up
@@ -15,16 +15,15 @@ AGameMapVirusSpawnerActor::AGameMapVirusSpawnerActor()
 	SetRootComponent(Area);
 }
 
+// Called every frame
+void AGameMapVirusSpawnerActor::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+}
+
 // Called when the game starts or when spawned
 void AGameMapVirusSpawnerActor::BeginPlay()
 {
 	Super::BeginPlay();
 	
-}
-
-// Called every frame
-void AGameMapVirusSpawnerActor::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
 }

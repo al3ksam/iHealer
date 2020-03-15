@@ -38,11 +38,13 @@ protected:
 	class UPaperFlipbookComponent* Sprite;
 
 private:
+	void StartWalking();
+	void StopWalking();
+	void Walking(); // Change the Pawn position
 	void EnableAutoRotate();
 	void DisableAutoRotate();
+	void Rotate(); // Change the Pawn rotation
 
-	// Change a Pawn rotation
-	void Rotate();
-
-	FTimerHandle RotationTimerHandle_;
+	FTimerHandle RotationTimerHandle_; // Timer handle for the rotation
+	FTimerHandle WalkingTimerHandle_; // Timer handle for the walking 
 };

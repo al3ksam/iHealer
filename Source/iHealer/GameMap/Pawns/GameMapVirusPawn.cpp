@@ -10,7 +10,7 @@
 // Sets default values
 AGameMapVirusPawn::AGameMapVirusPawn()
 {
- 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+ 	// Set this pawn to call Tick() every frame.
 	PrimaryActorTick.bCanEverTick = true;
 
 	// Ignore the rotation from the controller
@@ -20,7 +20,10 @@ AGameMapVirusPawn::AGameMapVirusPawn()
 
 	Sphere = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere"));
 	SetRootComponent(Sphere);
+	Sphere->SetCollisionProfileName("Pawn");
 	Sphere->BodyInstance.bLockYTranslation = true; // 2D-translation (XZ-axis)
+	Sphere->BodyInstance.bLockXRotation = true; // 2D-rotation (XZ-axis)
+	Sphere->BodyInstance.bLockZRotation = true; // 2D-rotation (XZ-axis)
 
 	Sprite = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Sprite"));
 	Sprite->SetupAttachment(Sphere);
@@ -57,14 +60,33 @@ void AGameMapVirusPawn::BeginPlay()
 	Super::BeginPlay();
 
 	this->EnableAutoRotate();
+	this->StartWalking();
 }
 
 // Called when a Pawn is being removed
 void AGameMapVirusPawn::EndPlay(EEndPlayReason::Type EndPlayReason)
 {
 	Super::EndPlay(EndPlayReason);
-
+	
 	this->DisableAutoRotate();
+	this->StopWalking();
+}
+
+void AGameMapVirusPawn::StartWalking()
+{
+	GetWorld()->GetTimerManager()
+		.SetTimer(this->WalkingTimerHandle_, this, &AGameMapVirusPawn::Walking, 0.02f, true);
+}
+
+void AGameMapVirusPawn::StopWalking()
+{
+	GetWorld()->GetTimerManager().ClearTimer(this->WalkingTimerHandle_);
+}
+
+// Change the Pawn position
+void AGameMapVirusPawn::Walking()
+{
+	this->AddActorWorldOffset(FVector(2.f, 0.f, 0.f), true);
 }
 
 void AGameMapVirusPawn::EnableAutoRotate()
@@ -103,7 +125,7 @@ void AGameMapVirusPawn::DisableAutoRotate()
 	GetWorld()->GetTimerManager().ClearTimer(this->RotationTimerHandle_);
 }
 
-// Change a Pawn rotation
+// Change the Pawn rotation
 void AGameMapVirusPawn::Rotate()
 {
 	this->AddActorLocalRotation(FRotator(1.f, 0.f, 0.f));

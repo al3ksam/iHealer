@@ -6,6 +6,9 @@
 
 AGameMapCamera::AGameMapCamera()
 {
+	// Set this actor to call Tick() every frame
+	PrimaryActorTick.bCanEverTick = false;
+
 	// Setting up the camera component for an orthogonal view 
 	UCameraComponent* GameMapCameraComponent = this->GetCameraComponent();
 	GameMapCameraComponent->ProjectionMode = ECameraProjectionMode::Orthographic;
