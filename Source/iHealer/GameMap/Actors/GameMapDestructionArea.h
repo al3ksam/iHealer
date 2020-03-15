@@ -22,6 +22,12 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	// Called when any object overlap this actor
+	UFUNCTION()
+	virtual void OnOverlap(
+		UPrimitiveComponent* DestructionArea, AActor* Actor, UPrimitiveComponent* ActorComponent,
+		int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
 	UPROPERTY(VisibleAnywhere)
 	class UBoxComponent* Area;
 };

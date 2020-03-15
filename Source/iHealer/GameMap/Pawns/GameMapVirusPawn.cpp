@@ -59,7 +59,7 @@ void AGameMapVirusPawn::BeginPlay()
 {
 	Super::BeginPlay();
 
-	this->EnableAutoRotate();
+	this->StartRotate();
 	this->StartWalking();
 }
 
@@ -68,8 +68,20 @@ void AGameMapVirusPawn::EndPlay(EEndPlayReason::Type EndPlayReason)
 {
 	Super::EndPlay(EndPlayReason);
 	
-	this->DisableAutoRotate();
+	this->StopRotate();
 	this->StopWalking();
+}
+
+// Change the Pawn position
+void AGameMapVirusPawn::Walking()
+{
+	this->AddActorWorldOffset(FVector(2.f, 0.f, 0.f), true);
+}
+
+// Change the Pawn rotation
+void AGameMapVirusPawn::Rotate()
+{
+	this->AddActorLocalRotation(FRotator(1.f, 0.f, 0.f), true);
 }
 
 void AGameMapVirusPawn::StartWalking()
@@ -83,13 +95,7 @@ void AGameMapVirusPawn::StopWalking()
 	GetWorld()->GetTimerManager().ClearTimer(this->WalkingTimerHandle_);
 }
 
-// Change the Pawn position
-void AGameMapVirusPawn::Walking()
-{
-	this->AddActorWorldOffset(FVector(2.f, 0.f, 0.f), true);
-}
-
-void AGameMapVirusPawn::EnableAutoRotate()
+void AGameMapVirusPawn::StartRotate()
 {
 	// Rotation speeds
 	TArray<float> const RSpeeds {
@@ -119,14 +125,8 @@ void AGameMapVirusPawn::EnableAutoRotate()
 		.SetTimer(this->RotationTimerHandle_, this, &AGameMapVirusPawn::Rotate, RotationSpeed, true);
 }
 
-void AGameMapVirusPawn::DisableAutoRotate()
+void AGameMapVirusPawn::StopRotate()
 {
 	// Stop to rotate the Pawn
 	GetWorld()->GetTimerManager().ClearTimer(this->RotationTimerHandle_);
-}
-
-// Change the Pawn rotation
-void AGameMapVirusPawn::Rotate()
-{
-	this->AddActorLocalRotation(FRotator(1.f, 0.f, 0.f));
 }

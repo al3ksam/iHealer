@@ -23,5 +23,5 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(VisibleAnywhere)
-	class UBoxComponent* Area;
+	class UBoxComponent* Area; 
 };

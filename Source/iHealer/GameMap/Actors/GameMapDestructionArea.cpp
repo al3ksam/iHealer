@@ -13,7 +13,7 @@ AGameMapDestructionArea::AGameMapDestructionArea()
 	// Setting up
 	Area = CreateDefaultSubobject<UBoxComponent>("Area");
 	SetRootComponent(Area);
-
+	Area->SetGenerateOverlapEvents(true);
 	Area->SetCollisionProfileName("OverlapAll");
 }
 
@@ -27,4 +27,14 @@ void AGameMapDestructionArea::Tick(float DeltaTime)
 void AGameMapDestructionArea::BeginPlay()
 {
 	Super::BeginPlay();
+
+	// Add overlap handle
+	Area->OnComponentBeginOverlap.AddDynamic(this, &AGameMapDestructionArea::OnOverlap);
+}
+
+void AGameMapDestructionArea::OnOverlap(
+	UPrimitiveComponent* DestructionArea, AActor* Actor, UPrimitiveComponent* ActorComponent,
+	int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	Actor->Destroy();
 }
