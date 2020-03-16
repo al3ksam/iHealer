@@ -10,9 +10,9 @@ AGameMapDestructionArea::AGameMapDestructionArea()
  	// Set this actor to call Tick() every frame. 
 	PrimaryActorTick.bCanEverTick = false;
 
-	// Setting up
 	Area = CreateDefaultSubobject<UBoxComponent>("Area");
 	SetRootComponent(Area);
+
 	Area->SetGenerateOverlapEvents(true);
 	Area->SetCollisionProfileName("OverlapAll");
 }
