@@ -20,10 +20,16 @@ AGameMapVirusPawn::AGameMapVirusPawn()
 
 	Sphere = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere"));
 	SetRootComponent(Sphere);
+
 	Sphere->SetCollisionProfileName("Pawn");
+
 	Sphere->BodyInstance.bLockYTranslation = true; // 2D-translation (XZ-axis)
 	Sphere->BodyInstance.bLockXRotation = true; // 2D-rotation (XZ-axis)
 	Sphere->BodyInstance.bLockZRotation = true; // 2D-rotation (XZ-axis)
+
+	// Setting physics
+	Sphere->SetMassOverrideInKg(NAME_None, 10.0f);
+	Sphere->SetEnableGravity(false);
 
 	Sprite = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Sprite"));
 	Sprite->SetupAttachment(Sphere);
@@ -48,10 +54,7 @@ void AGameMapVirusPawn::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 
-	// Configure Pawn physics
-	Sphere->SetSimulatePhysics(true);
-	Sphere->SetMassOverrideInKg(NAME_None, 10.0f);
-	Sphere->SetEnableGravity(false);
+	Sphere->SetSimulatePhysics(true); // Enable physics
 }
 
 // Called when the game starts or when spawned

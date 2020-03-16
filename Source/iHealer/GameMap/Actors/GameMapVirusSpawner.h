@@ -4,16 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "GameMapVirusSpawnerActor.generated.h"
+#include "GameMapVirusSpawner.generated.h"
 
 UCLASS()
-class IHEALER_API AGameMapVirusSpawnerActor : public AActor
+class IHEALER_API AGameMapVirusSpawner : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AGameMapVirusSpawnerActor();
+	AGameMapVirusSpawner();
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
