@@ -27,10 +27,6 @@ AGameMapVirusPawn::AGameMapVirusPawn()
 	Sphere->BodyInstance.bLockXRotation = true; // 2D-rotation (XZ-axis)
 	Sphere->BodyInstance.bLockZRotation = true; // 2D-rotation (XZ-axis)
 
-	// Setting physics
-	Sphere->SetMassOverrideInKg(NAME_None, 10.0f);
-	Sphere->SetEnableGravity(false);
-
 	Sprite = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Sprite"));
 	Sprite->SetupAttachment(Sphere);
 
@@ -54,6 +50,9 @@ void AGameMapVirusPawn::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 
+	// Setting physics
+	Sphere->SetMassOverrideInKg(NAME_None, 10.0f);
+	Sphere->SetEnableGravity(false);
 	Sphere->SetSimulatePhysics(true); // Enable physics
 }
 
