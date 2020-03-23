@@ -3,6 +3,7 @@
 
 #include "GameMapDestructionArea.h"
 #include "Components/BoxComponent.h"
+#include "iHealer/GameMap/Pawns/GameMapVirusPawn.h"
 
 // Sets default values
 AGameMapDestructionArea::AGameMapDestructionArea()
@@ -37,5 +38,9 @@ void AGameMapDestructionArea::OnOverlap(
 	UPrimitiveComponent* DestructionArea, AActor* Actor, UPrimitiveComponent* ActorComponent,
 	int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	Actor->Destroy();
+	bool bVirus = Actor->GetClass()->GetName() == AGameMapVirusPawn::StaticClass()->GetName();
+
+	if (bVirus) Actor->Destroy();
+
+	UE_LOG(LogTemp, Warning, TEXT("%s"), *Actor->GetName());
 }

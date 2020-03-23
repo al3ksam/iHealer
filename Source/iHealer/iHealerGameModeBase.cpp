@@ -8,4 +8,5 @@ AiHealerGameModeBase::AiHealerGameModeBase()
 {
 	// Default Player controller is the GameMap Player Controller
 	PlayerControllerClass = AGameMapPlayerController::StaticClass();
+	DefaultPawnClass = nullptr;
 }

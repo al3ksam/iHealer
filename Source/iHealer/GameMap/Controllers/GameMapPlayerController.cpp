@@ -4,6 +4,7 @@
 #include "GameMapPlayerController.h"
 #include "EngineUtils.h"
 #include "iHealer/GameMap/Pawns/GameMapVirusPawn.h"
+#include "UnrealEngine.h"
 
 AGameMapPlayerController::AGameMapPlayerController()
 {
@@ -13,6 +14,17 @@ AGameMapPlayerController::AGameMapPlayerController()
 void AGameMapPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
+
+	int32 SizeX = 0;
+	int32 SizeY = 0;
+	this->GetViewportSize(SizeX, SizeY);
+
+	FVector2D Resolution = FVector2D(GSystemResolution.ResX, GSystemResolution.ResY);
+
+	UE_LOG(LogTemp, Warning, TEXT("%sx%s"),
+		*FString::FromInt(Resolution.X),
+		*FString::FromInt(Resolution.Y)
+	);
 }
 
 // Test functionality game on touch
@@ -38,10 +50,7 @@ bool AGameMapPlayerController::InputTouch(
 		if (VirusName != "Virus3") continue;
 
 		bool bDestroyed = Virus->Destroy();
-
-		UE_LOG(LogTemp, Warning, TEXT("%s"), *FString::FromInt(static_cast<int32>(bDestroyed)));
 	}
-
 
 	bTouched = true;
 

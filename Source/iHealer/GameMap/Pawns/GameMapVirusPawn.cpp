@@ -6,6 +6,7 @@
 #include "Components/InputComponent.h"
 #include "PaperFlipbookComponent.h"
 #include "TimerManager.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AGameMapVirusPawn::AGameMapVirusPawn()
@@ -21,16 +22,19 @@ AGameMapVirusPawn::AGameMapVirusPawn()
 	Sphere = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere"));
 	SetRootComponent(Sphere);
 
+	Sphere->SetSphereRadius(34.f);
 	Sphere->SetCollisionProfileName("Pawn");
 
 	Sphere->BodyInstance.bLockYTranslation = true; // 2D-translation (XZ-axis)
-	Sphere->BodyInstance.bLockXRotation = true; // 2D-rotation (XZ-axis)
-	Sphere->BodyInstance.bLockZRotation = true; // 2D-rotation (XZ-axis)
+
+	// 2D-rotation (XZ-axis)
+	Sphere->BodyInstance.bLockXRotation = true; 
+	Sphere->BodyInstance.bLockZRotation = true;
 
 	Sprite = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Sprite"));
 	Sprite->SetupAttachment(Sphere);
 
-	SetActorRotation(FRotator(-90.f, 0.0f, 0.0f));
+	SetActorRotation(FRotator(0.f, 0.f, 0.f));
 }
 
 // Called every frame
@@ -72,12 +76,27 @@ void AGameMapVirusPawn::EndPlay(EEndPlayReason::Type EndPlayReason)
 	
 	this->StopRotate();
 	this->StopWalking();
+
+	FVector2D VPos = FVector2D(0.f, 0.f);
+
+	APlayerController* PC = UGameplayStatics::GetPlayerController(this, 0);
+
+	if (PC)
+	{
+		PC->ProjectWorldLocationToScreen(this->GetActorLocation(), VPos);
+
+		UE_LOG(LogTemp, Warning, TEXT("%s -> %s:%s"),
+			*this->GetName(),
+			*FString::FromInt(VPos.X),
+			*FString::FromInt(VPos.Y)
+		);
+	}
 }
 
 // Change the Pawn position
 void AGameMapVirusPawn::Walking()
 {
-	this->AddActorWorldOffset(FVector(2.f, 0.f, 0.f), true);
+	this->AddActorWorldOffset(FVector(0.f, 0.f, -1.f), true);
 }
 
 // Change the Pawn rotation
@@ -89,7 +108,7 @@ void AGameMapVirusPawn::Rotate()
 void AGameMapVirusPawn::StartWalking()
 {
 	GetWorld()->GetTimerManager()
-		.SetTimer(this->WalkingTimerHandle_, this, &AGameMapVirusPawn::Walking, 0.02f, true);
+		.SetTimer(this->WalkingTimerHandle_, this, &AGameMapVirusPawn::Walking, 0.04f, true);
 }
 
 void AGameMapVirusPawn::StopWalking()
