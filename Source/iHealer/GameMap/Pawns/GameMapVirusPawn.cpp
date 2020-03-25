@@ -126,11 +126,13 @@ void AGameMapVirusPawn::StartRotate()
 	};
 
 	// Get random index of the rotation speed
-	const enum ERotationSpeedIndex {
+	enum ERotationSpeedIndex {
 		NORMAL,
 		FASTER,
 		VERY_FAST
-	} RotationSpeedIndex = static_cast<ERotationSpeedIndex>(
+	};
+	
+	ERotationSpeedIndex const RotationSpeedIndex = static_cast<ERotationSpeedIndex>(
 		FMath::RandRange(ERotationSpeedIndex::NORMAL, ERotationSpeedIndex::VERY_FAST)
 	);
 
