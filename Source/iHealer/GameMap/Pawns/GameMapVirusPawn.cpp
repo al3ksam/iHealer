@@ -130,9 +130,7 @@ void AGameMapVirusPawn::StartRotate()
 		NORMAL,
 		FASTER,
 		VERY_FAST
-	};
-	
-	ERotationSpeedIndex const RotationSpeedIndex = static_cast<ERotationSpeedIndex>(
+	} const RotationSpeedIndex = static_cast<ERotationSpeedIndex>(
 		FMath::RandRange(ERotationSpeedIndex::NORMAL, ERotationSpeedIndex::VERY_FAST)
 	);
 
