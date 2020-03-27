@@ -15,6 +15,8 @@ AGameMapVirusSpawner::AGameMapVirusSpawner()
 
 	Area->SetGenerateOverlapEvents(false);
 	Area->SetCollisionProfileName("NoCollision");
+
+	Area->SetMobility(EComponentMobility::Static);
 }
 
 // Called every frame

@@ -24,7 +24,6 @@ AGameMapVirusPawn::AGameMapVirusPawn()
 
 	Sphere->SetSphereRadius(34.f);
 	Sphere->SetCollisionProfileName("Pawn");
-
 	Sphere->BodyInstance.bLockYTranslation = true; // 2D-translation (XZ-axis)
 
 	// 2D-rotation (XZ-axis)
@@ -135,11 +134,6 @@ void AGameMapVirusPawn::StartRotate()
 	);
 
 	float RotationSpeed = RSpeeds[RotationSpeedIndex];
-
-	UE_LOG(LogTemp, Warning, TEXT("Rotation speed of %s: %s"),
-		*this->GetName(),
-		*FString::FromInt(RotationSpeedIndex)
-	);
 
 	// Start to rotate the Pawn
 	GetWorld()->GetTimerManager()

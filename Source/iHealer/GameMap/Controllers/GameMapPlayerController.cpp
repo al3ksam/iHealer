@@ -25,6 +25,17 @@ void AGameMapPlayerController::BeginPlay()
 		*FString::FromInt(Resolution.X),
 		*FString::FromInt(Resolution.Y)
 	);
+
+	FVector WorldLocation = FVector(0.f, 0.f, 0.f);
+	FVector WorldDirection = FVector(0.f, 0.f, 0.f);
+
+	bool bRes = this->DeprojectScreenPositionToWorld(Resolution.X, Resolution.Y, WorldLocation, WorldDirection);
+
+	UE_LOG(LogTemp, Warning, TEXT("%s <-> %s | %s"),
+		*WorldDirection.ToString(),
+		*WorldDirection.ToString(),
+		*FString::FromInt(bRes)
+	);
 }
 
 // Test functionality game on touch

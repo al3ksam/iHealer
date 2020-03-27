@@ -40,7 +40,6 @@ void AGameMapDestructionArea::OnOverlap(
 {
 	bool bVirus = Actor->GetClass()->GetName() == AGameMapVirusPawn::StaticClass()->GetName();
 
+	// Destroy a Virus
 	if (bVirus) Actor->Destroy();
-
-	UE_LOG(LogTemp, Warning, TEXT("%s"), *Actor->GetName());
 }
