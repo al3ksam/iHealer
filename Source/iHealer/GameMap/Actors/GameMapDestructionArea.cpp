@@ -38,7 +38,8 @@ void AGameMapDestructionArea::OnOverlap(
 	UPrimitiveComponent* DestructionArea, AActor* Actor, UPrimitiveComponent* ActorComponent,
 	int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	bool bVirus = Actor->GetClass()->GetName() == AGameMapVirusPawn::StaticClass()->GetName();
+	FString ActorClassName = Actor->GetClass()->GetName();
+	bool bVirus = ActorClassName == AGameMapVirusPawn::StaticClass()->GetName();
 
 	// Destroy a Virus
 	if (bVirus) Actor->Destroy();
