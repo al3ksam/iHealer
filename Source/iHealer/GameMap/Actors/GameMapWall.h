@@ -4,16 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "GameMapLeftWall.generated.h"
+#include "GameMapWall.generated.h"
 
 UCLASS()
-class IHEALER_API AGameMapLeftWall : public AActor
+class IHEALER_API AGameMapWall : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AGameMapLeftWall();
+	AGameMapWall();
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
