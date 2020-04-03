@@ -12,16 +12,6 @@ AGameMapCamera::AGameMapCamera()
 	// Setting the camera component for an orthogonal view 
 	UCameraComponent* GameMapCameraComponent = this->GetCameraComponent();
 	GameMapCameraComponent->ProjectionMode = ECameraProjectionMode::Orthographic;
-	GameMapCameraComponent->OrthoWidth = 512.0f;
+	GameMapCameraComponent->OrthoWidth = 1024.0f;
 	GameMapCameraComponent->bConstrainAspectRatio = false;
-}
-
-// Called when the game starts or when spawned
-void AGameMapCamera::BeginPlay()
-{
-	Super::BeginPlay();
-
-	APlayerController* PC = UGameplayStatics::GetPlayerController(this, 0);
-
-	if (PC)	PC->SetViewTarget(this); // Lock the camera position
 }

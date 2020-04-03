@@ -13,8 +13,4 @@ class IHEALER_API AGameMapCamera : public ACameraActor
 
 public:
 	AGameMapCamera();
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
 };

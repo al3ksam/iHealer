@@ -3,8 +3,10 @@
 
 #include "GameMapPlayerController.h"
 #include "EngineUtils.h"
+#include "Engine/TextRenderActor.h"
+#include "Components/TextRenderComponent.h"
 #include "iHealer/GameMap/Pawns/GameMapVirusPawn.h"
-#include "UnrealEngine.h"
+#include "iHealer/GameMap/Actors/GameMapWall.h"
 
 AGameMapPlayerController::AGameMapPlayerController()
 {
@@ -19,31 +21,20 @@ void AGameMapPlayerController::BeginPlay()
 	int32 SizeY = 0;
 	this->GetViewportSize(SizeX, SizeY);
 
-	FVector2D Resolution = FVector2D(GSystemResolution.ResX, GSystemResolution.ResY);
-
-	UE_LOG(LogTemp, Warning, TEXT("%sx%s"),
-		*FString::FromInt(Resolution.X),
-		*FString::FromInt(Resolution.Y)
-	);
-
-	FVector WorldLocation = FVector(0.f, 0.f, 0.f);
-	FVector WorldDirection = FVector(0.f, 0.f, 0.f);
-
-	bool bRes = this->DeprojectScreenPositionToWorld(Resolution.X, Resolution.Y, WorldLocation, WorldDirection);
-
-	UE_LOG(LogTemp, Warning, TEXT("%s <-> %s | %s"),
-		*WorldDirection.ToString(),
-		*WorldDirection.ToString(),
-		*FString::FromInt(bRes)
-	);
+	for (TActorIterator<ATextRenderActor> ActorIterator(GetWorld()); ActorIterator; ++ActorIterator)
+	{
+		ActorIterator->GetTextRender()->SetText(
+			FText::FromString(FString::FromInt(SizeX) + "x" + FString::FromInt(SizeY))
+		);
+	}
 }
 
 // Test functionality game on touch
 bool AGameMapPlayerController::InputTouch(
-	uint32 Handle, 
-	ETouchType::Type Type, 
-	const FVector2D& TouchLocation, 
-	float Force, FDateTime DeviceTimestamp, 
+	uint32 Handle,
+	ETouchType::Type Type,
+	const FVector2D& TouchLocation,
+	float Force, FDateTime DeviceTimestamp,
 	uint32 TouchpadIndex)
 {
 	Super::InputTouch(Handle, Type, TouchLocation, Force, DeviceTimestamp, TouchpadIndex);
@@ -51,16 +42,48 @@ bool AGameMapPlayerController::InputTouch(
 
 	if (this->bTouched)	return false;
 
-	
+
 	for (TActorIterator<AGameMapVirusPawn> Virus(GetWorld()); Virus; ++Virus)
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("%s"), *Virus->GetName());
 
 		FString VirusName = Virus->GetName();
-		
+
 		if (VirusName != "Virus3") continue;
 
 		bool bDestroyed = Virus->Destroy();
+	}
+
+	int32 SizeX = 0;
+	int32 SizeY = 0;
+	this->GetViewportSize(SizeX, SizeY);
+
+	UE_LOG(LogTemp, Warning, TEXT("Viewport size: %sx%s"),
+		*FString::FromInt(SizeX),
+		*FString::FromInt(SizeY)
+	);
+
+	for (TActorIterator<AGameMapWall> ActorIterator(GetWorld()); ActorIterator; ++ActorIterator)
+	{
+
+		if (ActorIterator->GetName() == "GameMapWallDown")
+		{
+			FVector ActorLocation = ActorIterator->GetActorLocation();
+			FVector2D ScreenLocation = FVector2D(0.f, 0.f);
+			bool bAccess = this->ProjectWorldLocationToScreen(ActorLocation, ScreenLocation);
+			UE_LOG(LogTemp, Warning, TEXT("%s %s -> %s"),
+				*ActorIterator->GetName(),
+				*ScreenLocation.ToString(),
+				*FString::FromInt(bAccess)
+			);
+		}
+	}
+
+	for (TActorIterator<ATextRenderActor> ActorIterator(GetWorld()); ActorIterator; ++ActorIterator)
+	{
+		ActorIterator->GetTextRender()->SetText(
+			FText::FromString(FString::FromInt(SizeX) + "x" + FString::FromInt(SizeY))
+		);
 	}
 
 	bTouched = true;

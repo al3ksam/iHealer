@@ -29,23 +29,23 @@ protected:
 	virtual void BeginPlay() override;
 
 	// Called when a Pawn is being removed
-	virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;
-
-	virtual void Walking(); // Change the Pawn position
-	virtual void Rotate(); // Change the Pawn rotation
-
-	UPROPERTY(VisibleAnywhere)
-	class USphereComponent* Sphere; 
-
-	UPROPERTY(VisibleAnywhere)
-	class UPaperFlipbookComponent* Sprite;
+	virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;	
 
 private:
+	void Walking(); // Change the Pawn position
+	void Rotate(); // Change the Pawn rotation
+
 	void StartWalking();
 	void StopWalking();
 	void StartRotate();
 	void StopRotate();
-	
+
 	FTimerHandle RotationTimerHandle_; // Timer handle for the rotation
 	FTimerHandle WalkingTimerHandle_; // Timer handle for the walking 
+
+	UPROPERTY(VisibleAnywhere)
+	class USphereComponent* Sphere;
+
+	UPROPERTY(VisibleAnywhere)
+	class UPaperFlipbookComponent* Sprite;
 };

@@ -95,7 +95,7 @@ void AGameMapVirusPawn::EndPlay(EEndPlayReason::Type EndPlayReason)
 // Change the Pawn position
 void AGameMapVirusPawn::Walking()
 {
-	this->AddActorWorldOffset(FVector(0.f, 0.f, -1.f), true);
+	//this->AddActorWorldOffset(FVector(0.f, 0.f, -1.f), true);
 }
 
 // Change the Pawn rotation
@@ -107,7 +107,7 @@ void AGameMapVirusPawn::Rotate()
 void AGameMapVirusPawn::StartWalking()
 {
 	GetWorld()->GetTimerManager()
-		.SetTimer(this->WalkingTimerHandle_, this, &AGameMapVirusPawn::Walking, 0.04f, true);
+		.SetTimer(this->WalkingTimerHandle_, this, &AGameMapVirusPawn::Walking, 0.02f, true);
 }
 
 void AGameMapVirusPawn::StopWalking()

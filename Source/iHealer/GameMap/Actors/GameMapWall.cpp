@@ -11,12 +11,12 @@ AGameMapWall::AGameMapWall()
  	// Set this actor to call Tick() every frame. 
 	PrimaryActorTick.bCanEverTick = false;
 
-	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
-	SetRootComponent(Mesh); 
+	Wall = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Wall"));
+	SetRootComponent(Wall); 
 
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> Cube(TEXT("/Game/GameMap/Meshes/Cube.Cube"));
 
-	Mesh->SetStaticMesh(Cube.Object);
+	Wall->SetStaticMesh(Cube.Object);
 }
 
 // Called every frame
@@ -28,5 +28,5 @@ void AGameMapWall::Tick(float DeltaTime)
 // Called when the game starts or when spawned
 void AGameMapWall::BeginPlay()
 {
-	Super::BeginPlay();	
+	Super::BeginPlay();
 }

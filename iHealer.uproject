@@ -41,5 +41,8 @@
 			"Name": "AppleMoviePlayer",
 			"Enabled": false
 		}
+	],
+	"TargetPlatforms": [
+		"Android"
 	]
 }
