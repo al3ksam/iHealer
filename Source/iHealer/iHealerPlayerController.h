@@ -4,15 +4,15 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
-#include "GameMapPlayerController.generated.h"
+#include "iHealerPlayerController.generated.h"
 
 UCLASS()
-class IHEALER_API AGameMapPlayerController : public APlayerController
+class IHEALER_API AiHealerPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 	
 public:
-	AGameMapPlayerController();
+	AiHealerPlayerController();
 
 protected:
 	// Called when the game starts or when spawned

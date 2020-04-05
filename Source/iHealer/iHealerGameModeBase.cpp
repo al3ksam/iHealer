@@ -2,11 +2,11 @@
 
 
 #include "iHealerGameModeBase.h"
-#include "GameMap/Controllers/GameMapPlayerController.h"
+#include "iHealerPlayerController.h"
 
 AiHealerGameModeBase::AiHealerGameModeBase()
 {
 	// Default Player controller is the GameMap Player Controller
-	PlayerControllerClass = AGameMapPlayerController::StaticClass();
+	PlayerControllerClass = AiHealerPlayerController::StaticClass();
 	DefaultPawnClass = nullptr;
 }

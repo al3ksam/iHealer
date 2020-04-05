@@ -1,19 +1,19 @@
 // Copyright 1998-2020 Epic Games, Inc. All Rights Reserved.
 
 
-#include "GameMapPlayerController.h"
+#include "iHealerPlayerController.h"
 #include "EngineUtils.h"
 #include "Engine/TextRenderActor.h"
 #include "Components/TextRenderComponent.h"
 #include "iHealer/GameMap/Pawns/GameMapVirusPawn.h"
 #include "iHealer/GameMap/Actors/GameMapWall.h"
 
-AGameMapPlayerController::AGameMapPlayerController()
+AiHealerPlayerController::AiHealerPlayerController()
 {
 }
 
 // Called when the game starts or when spawned
-void AGameMapPlayerController::BeginPlay()
+void AiHealerPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
@@ -30,7 +30,7 @@ void AGameMapPlayerController::BeginPlay()
 }
 
 // Test functionality game on touch
-bool AGameMapPlayerController::InputTouch(
+bool AiHealerPlayerController::InputTouch(
 	uint32 Handle,
 	ETouchType::Type Type,
 	const FVector2D& TouchLocation,
