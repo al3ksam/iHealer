@@ -43,9 +43,9 @@ private:
 	FTimerHandle RotationTimerHandle_; // Timer handle for the rotation
 	FTimerHandle WalkingTimerHandle_; // Timer handle for the walking 
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class USphereComponent* Sphere;
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class UPaperFlipbookComponent* Sprite;
 };
