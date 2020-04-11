@@ -6,6 +6,26 @@
 #include "GameFramework/Pawn.h"
 #include "GameMapVirusPawn.generated.h"
 
+namespace EVirusWalkingSpeeds
+{
+	using Type = float;
+
+	const Type None   = 0.f;
+	const Type Normal = 10.f;
+	const Type Medium = 14.f;
+	const Type Quick  = 18.f;
+}
+
+namespace EVirusRotationSpeeds
+{
+	using Type = float;
+
+	const Type None   = 0.f;
+	const Type Normal = 1.f;
+	const Type Medium = 2.f;
+	const Type Quick  = 3.f;
+}
+
 UCLASS()
 class IHEALER_API AGameMapVirusPawn : public APawn
 {
@@ -41,21 +61,16 @@ protected:
 	virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;	
 
 private:
+	static EVirusRotationSpeeds::Type GetRandomRotationSpeed();
+
 	void Walking(); // Change the Pawn position
 	void Rotate(); // Change the Pawn rotation
+	
+	EVirusWalkingSpeeds::Type WalkingSpeed_ = EVirusWalkingSpeeds::None;
+	EVirusRotationSpeeds::Type RotationSpeed_ = EVirusRotationSpeeds::None;
 
 	bool bWalking_ = false;
 	bool bRotating_ = false;
-
-	float WalkingSpeed_ = 0.f;
-	float RotationSpeed_ = 0.f;
-
-	TArray<float> RotationSpeeds_
-	{
-		1.f,
-		2.f,
-		3.f
-	};
 
 	FTimerHandle RotationTimerHandle_; // Timer handle for the rotation
 	FTimerHandle WalkingTimerHandle_; // Timer handle for the walking 

@@ -76,9 +76,7 @@ void AGameMapVirusPawn::StartRotate()
 {
 	if (this->bRotating_) return;
 
-	unsigned char RotationSpeedsIndex = FMath::RandRange(0, RotationSpeeds_.Max() - 1);
-
-	this->RotationSpeed_ = RotationSpeeds_[RotationSpeedsIndex];
+	this->RotationSpeed_ = AGameMapVirusPawn::GetRandomRotationSpeed();
 
 	GetWorld()->GetTimerManager()
 		.SetTimer(this->RotationTimerHandle_, this, &AGameMapVirusPawn::Rotate, 0.04f, true);
@@ -119,6 +117,21 @@ void AGameMapVirusPawn::EndPlay(EEndPlayReason::Type EndPlayReason)
 
 	if (this->bWalking_) this->StopWalking();
 	if (this->bRotating_) this->StopRotate();
+}
+
+EVirusRotationSpeeds::Type AGameMapVirusPawn::GetRandomRotationSpeed()
+{
+	const uint8 SpeedsCount = 3;
+	uint8 SpeedIndex = FMath::RandRange(1, SpeedsCount);
+
+	switch (SpeedIndex)
+	{
+	case 1: return EVirusRotationSpeeds::Normal;
+	case 2: return EVirusRotationSpeeds::Medium;
+	case 3: return EVirusRotationSpeeds::Quick;
+
+	default: return EVirusRotationSpeeds::None;
+	}
 }
 
 // Change the Pawn position
