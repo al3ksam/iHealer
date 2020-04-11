@@ -6,7 +6,6 @@
 #include "Components/InputComponent.h"
 #include "PaperFlipbookComponent.h"
 #include "TimerManager.h"
-#include "Kismet/GameplayStatics.h"
 
 #include "iHealer/GameMap/Controllers/GameMapVirusAIController.h"
 
@@ -120,21 +119,6 @@ void AGameMapVirusPawn::EndPlay(EEndPlayReason::Type EndPlayReason)
 
 	if (this->bWalking_) this->StopWalking();
 	if (this->bRotating_) this->StopRotate();
-
-	/*FVector2D VPos = FVector2D(0.f, 0.f);
-
-	APlayerController* PC = UGameplayStatics::GetPlayerController(this, 0);
-
-	if (PC)
-	{
-		PC->ProjectWorldLocationToScreen(this->GetActorLocation(), VPos);
-
-		UE_LOG(LogTemp, Warning, TEXT("%s -> %s:%s"),
-			*this->GetName(),
-			*FString::FromInt(VPos.X),
-			*FString::FromInt(VPos.Y)
-		);
-	}*/
 }
 
 // Change the Pawn position
