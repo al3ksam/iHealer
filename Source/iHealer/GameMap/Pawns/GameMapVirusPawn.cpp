@@ -8,9 +8,15 @@
 #include "TimerManager.h"
 #include "Kismet/GameplayStatics.h"
 
+#include "iHealer/GameMap/Controllers/GameMapVirusAIController.h"
+
 // Sets default values
 AGameMapVirusPawn::AGameMapVirusPawn()
 {
+	// Set AI Controller
+	AIControllerClass = AGameMapVirusAIController::StaticClass();
+	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
+
  	// Set this pawn to call Tick() every frame.
 	PrimaryActorTick.bCanEverTick = false;
 
@@ -48,6 +54,48 @@ void AGameMapVirusPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
+void AGameMapVirusPawn::StartWalking()
+{
+	if (this->bWalking_) return;
+
+	GetWorld()->GetTimerManager()
+		.SetTimer(this->WalkingTimerHandle_, this, &AGameMapVirusPawn::Walking, 0.04f, true);
+
+	this->bWalking_ = true;
+}
+
+void AGameMapVirusPawn::StopWalking()
+{
+	if (!this->bWalking_) return;
+
+	GetWorld()->GetTimerManager().ClearTimer(this->WalkingTimerHandle_);
+
+	this->bWalking_ = false;
+}
+
+void AGameMapVirusPawn::StartRotate()
+{
+	if (this->bRotating_) return;
+
+	unsigned char RotationSpeedsIndex = FMath::RandRange(0, RotationSpeeds_.Max() - 1);
+
+	this->RotationSpeed_ = RotationSpeeds_[RotationSpeedsIndex];
+
+	GetWorld()->GetTimerManager()
+		.SetTimer(this->RotationTimerHandle_, this, &AGameMapVirusPawn::Rotate, 0.04f, true);
+
+	this->bRotating_ = true;
+}
+
+void AGameMapVirusPawn::StopRotate()
+{
+	if (!this->bRotating_) return;
+
+	GetWorld()->GetTimerManager().ClearTimer(this->RotationTimerHandle_);
+
+	this->bRotating_ = false;
+}
+
 // Called after the actor's components have been initialized
 void AGameMapVirusPawn::PostInitializeComponents()
 {
@@ -63,20 +111,17 @@ void AGameMapVirusPawn::PostInitializeComponents()
 void AGameMapVirusPawn::BeginPlay()
 {
 	Super::BeginPlay();
-
-	this->StartRotate();
-	this->StartWalking();
 }
 
 // Called when a Pawn is being removed
 void AGameMapVirusPawn::EndPlay(EEndPlayReason::Type EndPlayReason)
 {
 	Super::EndPlay(EndPlayReason);
-	
-	this->StopRotate();
-	this->StopWalking();
 
-	FVector2D VPos = FVector2D(0.f, 0.f);
+	if (this->bWalking_) this->StopWalking();
+	if (this->bRotating_) this->StopRotate();
+
+	/*FVector2D VPos = FVector2D(0.f, 0.f);
 
 	APlayerController* PC = UGameplayStatics::GetPlayerController(this, 0);
 
@@ -89,59 +134,17 @@ void AGameMapVirusPawn::EndPlay(EEndPlayReason::Type EndPlayReason)
 			*FString::FromInt(VPos.X),
 			*FString::FromInt(VPos.Y)
 		);
-	}
+	}*/
 }
 
 // Change the Pawn position
 void AGameMapVirusPawn::Walking()
 {
-	//this->AddActorWorldOffset(FVector(0.f, 0.f, -1.f), true);
+	this->AddActorWorldOffset(FVector(0.f, 0.f, -1.f * this->WalkingSpeed_), true);
 }
 
 // Change the Pawn rotation
 void AGameMapVirusPawn::Rotate()
 {
-	this->AddActorLocalRotation(FRotator(1.f, 0.f, 0.f), true);
-}
-
-void AGameMapVirusPawn::StartWalking()
-{
-	GetWorld()->GetTimerManager()
-		.SetTimer(this->WalkingTimerHandle_, this, &AGameMapVirusPawn::Walking, 0.02f, true);
-}
-
-void AGameMapVirusPawn::StopWalking()
-{
-	GetWorld()->GetTimerManager().ClearTimer(this->WalkingTimerHandle_);
-}
-
-void AGameMapVirusPawn::StartRotate()
-{
-	// Rotation speeds
-	TArray<float> const RSpeeds {
-		0.04f, // NORMAL
-		0.02f, // FASTER
-		0.01f  // VERY FAST
-	};
-
-	// Get random index of the rotation speed
-	enum ERotationSpeedIndex {
-		NORMAL,
-		FASTER,
-		VERY_FAST
-	} const RotationSpeedIndex = static_cast<ERotationSpeedIndex>(
-		FMath::RandRange(ERotationSpeedIndex::NORMAL, ERotationSpeedIndex::VERY_FAST)
-	);
-
-	float RotationSpeed = RSpeeds[RotationSpeedIndex];
-
-	// Start to rotate the Pawn
-	GetWorld()->GetTimerManager()
-		.SetTimer(this->RotationTimerHandle_, this, &AGameMapVirusPawn::Rotate, RotationSpeed, true);
-}
-
-void AGameMapVirusPawn::StopRotate()
-{
-	// Stop to rotate the Pawn
-	GetWorld()->GetTimerManager().ClearTimer(this->RotationTimerHandle_);
+	this->AddActorLocalRotation(FRotator(1.f * this->RotationSpeed_, 0.f, 0.f), true);
 }

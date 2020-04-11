@@ -5,8 +5,14 @@
 #include "EngineUtils.h"
 #include "Engine/TextRenderActor.h"
 #include "Components/TextRenderComponent.h"
+
 #include "iHealer/GameMap/Pawns/GameMapVirusPawn.h"
 #include "iHealer/GameMap/Actors/GameMapWall.h"
+
+
+#include "TimerManager.h"
+#include "Engine/World.h"
+
 
 AiHealerPlayerController::AiHealerPlayerController()
 {
@@ -51,7 +57,11 @@ bool AiHealerPlayerController::InputTouch(
 
 		if (VirusName != "Virus3") continue;
 
+		GetWorld()->GetTimerManager().ListTimers();
+
 		bool bDestroyed = Virus->Destroy();
+
+		GetWorld()->GetTimerManager().ListTimers();
 	}
 
 	int32 SizeX = 0;
