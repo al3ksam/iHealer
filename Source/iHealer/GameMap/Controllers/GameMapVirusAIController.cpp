@@ -12,11 +12,29 @@ AGameMapVirusAIController::AGameMapVirusAIController()
 // Called when the game starts or when spawned
 void AGameMapVirusAIController::BeginPlay()
 {
-	AGameMapVirusPawn* Virus = GetPawn<AGameMapVirusPawn>();
+	Super::BeginPlay();
+}
+
+// Overridable native function for when this controller possesses a pawn 
+void AGameMapVirusAIController::OnPossess(APawn* InPawn)
+{
+	Super::OnPossess(InPawn);
+
+	AGameMapVirusPawn* Virus = Cast<AGameMapVirusPawn>(InPawn);
 
 	if (Virus != nullptr)
 	{
 		Virus->StartRotate();
 		Virus->StartWalking();
 	}
+
+	UE_LOG(LogTemp, Warning, TEXT("OnPossess %s"),
+		*InPawn->GetName()
+	);
+}
+
+// Overridable native function for when this controller unpossesses its pawn
+void AGameMapVirusAIController::OnUnPossess()
+{
+	Super::OnUnPossess();
 }

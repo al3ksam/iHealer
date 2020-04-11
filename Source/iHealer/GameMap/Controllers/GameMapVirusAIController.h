@@ -17,4 +17,10 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	// Overridable native function for when this controller possesses a pawn 
+	virtual void OnPossess(APawn* InPawn) override;
+
+	// Overridable native function for when this controller unpossesses its pawn
+	virtual void OnUnPossess() override;
 };
