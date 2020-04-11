@@ -60,8 +60,6 @@ bool AiHealerPlayerController::InputTouch(
 		GetWorld()->GetTimerManager().ListTimers();
 
 		bool bDestroyed = Virus->Destroy();
-
-		GetWorld()->GetTimerManager().ListTimers();
 	}
 
 	int32 SizeX = 0;

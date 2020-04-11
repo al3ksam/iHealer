@@ -12,9 +12,9 @@ AGameMapVirusAIController::AGameMapVirusAIController()
 // Called when the game starts or when spawned
 void AGameMapVirusAIController::BeginPlay()
 {
-	AGameMapVirusPawn* Virus = Cast<AGameMapVirusPawn>(GetPawn());
+	AGameMapVirusPawn* Virus = GetPawn<AGameMapVirusPawn>();
 
-	if (Virus)
+	if (Virus != nullptr)
 	{
 		Virus->StartRotate();
 		Virus->StartWalking();
