@@ -126,11 +126,11 @@ EVirusRotationSpeeds::Type AGameMapVirusPawn::GetRandomRotationSpeed()
 
 	switch (SpeedIndex)
 	{
-	case 1: return EVirusRotationSpeeds::Normal;
-	case 2: return EVirusRotationSpeeds::Medium;
-	case 3: return EVirusRotationSpeeds::Quick;
+		case 1: return EVirusRotationSpeeds::Normal;
+		case 2: return EVirusRotationSpeeds::Medium;
+		case 3: return EVirusRotationSpeeds::Quick;
 
-	default: return EVirusRotationSpeeds::None;
+		default: return EVirusRotationSpeeds::None;
 	}
 }
 
