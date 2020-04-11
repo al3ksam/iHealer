@@ -27,10 +27,6 @@ void AGameMapVirusAIController::OnPossess(APawn* InPawn)
 		Virus->StartRotate();
 		Virus->StartWalking();
 	}
-
-	UE_LOG(LogTemp, Warning, TEXT("OnPossess %s"),
-		*InPawn->GetName()
-	);
 }
 
 // Overridable native function for when this controller unpossesses its pawn

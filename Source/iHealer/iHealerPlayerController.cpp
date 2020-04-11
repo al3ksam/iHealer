@@ -9,11 +9,6 @@
 #include "iHealer/GameMap/Pawns/GameMapVirusPawn.h"
 #include "iHealer/GameMap/Actors/GameMapWall.h"
 
-
-#include "TimerManager.h"
-#include "Engine/World.h"
-
-
 AiHealerPlayerController::AiHealerPlayerController()
 {
 }
@@ -56,8 +51,6 @@ bool AiHealerPlayerController::InputTouch(
 		FString VirusName = Virus->GetName();
 
 		if (VirusName != "Virus3") continue;
-
-		GetWorld()->GetTimerManager().ListTimers();
 
 		bool bDestroyed = Virus->Destroy();
 	}
