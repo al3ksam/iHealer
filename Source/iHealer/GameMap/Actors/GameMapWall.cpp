@@ -16,7 +16,7 @@ AGameMapWall::AGameMapWall()
 
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> Cube(TEXT("/Game/GameMap/Meshes/Cube.Cube"));
 
-	Wall->SetStaticMesh(Cube.Object);
+	if (Cube.Object != nullptr) Wall->SetStaticMesh(Cube.Object);
 }
 
 // Called every frame
