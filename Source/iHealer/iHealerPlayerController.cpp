@@ -46,6 +46,8 @@ bool AiHealerPlayerController::InputTouch(
 
 	for (TActorIterator<AGameMapVirusPawn> Virus(GetWorld()); Virus; ++Virus)
 	{
+		if (*Virus == nullptr) break;
+
 		//UE_LOG(LogTemp, Warning, TEXT("%s"), *Virus->GetName());
 
 		FString VirusName = Virus->GetName();
@@ -66,6 +68,8 @@ bool AiHealerPlayerController::InputTouch(
 
 	for (TActorIterator<AGameMapWall> ActorIterator(GetWorld()); ActorIterator; ++ActorIterator)
 	{
+		if (*ActorIterator == nullptr) break;
+
 
 		if (ActorIterator->GetName() == "GameMapWallDown")
 		{
@@ -82,6 +86,8 @@ bool AiHealerPlayerController::InputTouch(
 
 	for (TActorIterator<ATextRenderActor> ActorIterator(GetWorld()); ActorIterator; ++ActorIterator)
 	{
+		if (*ActorIterator == nullptr) break;
+
 		ActorIterator->GetTextRender()->SetText(
 			FText::FromString(FString::FromInt(SizeX) + "x" + FString::FromInt(SizeY))
 		);
