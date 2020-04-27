@@ -8,7 +8,7 @@ AGameMapCamera::AGameMapCamera()
 	UCameraComponent* GameMapCameraComponent = this->GetCameraComponent();
 
 	// Setting the camera component for an orthogonal view 
-	GameMapCameraComponent->ProjectionMode = ECameraProjectionMode::Orthographic;
-	GameMapCameraComponent->OrthoWidth = 1024.0f;
-	GameMapCameraComponent->bConstrainAspectRatio = false;
+	GameMapCameraComponent->SetProjectionMode(ECameraProjectionMode::Orthographic);
+	GameMapCameraComponent->SetOrthoWidth(1024.f);
+	GameMapCameraComponent->SetConstraintAspectRatio(false);
 }
