@@ -10,13 +10,13 @@ AGameMapVirusSpawner::AGameMapVirusSpawner()
  	// Set this actor to call Tick() every frame. 
 	PrimaryActorTick.bCanEverTick = false;
 
-	Area = CreateDefaultSubobject<UBoxComponent>(TEXT("Area"));
-	SetRootComponent(Area);
+	Spawner = CreateDefaultSubobject<UBoxComponent>(TEXT("Spawner"));
+	SetRootComponent(Spawner);
 
-	Area->SetGenerateOverlapEvents(false);
-	Area->SetCollisionProfileName("NoCollision");
+	Spawner->SetGenerateOverlapEvents(false);
+	Spawner->SetCollisionProfileName("NoCollision");
 
-	Area->SetMobility(EComponentMobility::Static);
+	Spawner->SetMobility(EComponentMobility::Static);
 }
 
 // Called every frame

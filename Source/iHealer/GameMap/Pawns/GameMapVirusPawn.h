@@ -47,8 +47,11 @@ public:
 	virtual void StartRotate();
 	virtual void StopRotate();
 
-	FORCEINLINE bool isWalking() { return bWalking_; }
-	FORCEINLINE bool isRotating() { return bRotating_; }
+	FORCEINLINE bool isWalking() const { return bWalking_; }
+	FORCEINLINE bool isRotating() const { return bRotating_; }
+
+	FORCEINLINE class USphereComponent* GetSphereCollision() const { return SphereCollision; }
+	FORCEINLINE class UPaperFlipbookComponent* GetSprite() const { return Sprite; }
 
 protected:
 	// Called after the actor's components have been initialized
@@ -76,7 +79,7 @@ private:
 	FTimerHandle WalkingTimerHandle_; // Timer handle for the walking 
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	class USphereComponent* Sphere;
+	class USphereComponent* SphereCollision;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class UPaperFlipbookComponent* Sprite;

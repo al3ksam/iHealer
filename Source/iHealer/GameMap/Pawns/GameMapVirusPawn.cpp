@@ -24,19 +24,19 @@ AGameMapVirusPawn::AGameMapVirusPawn()
 	bUseControllerRotationRoll = false;
 	bUseControllerRotationYaw = false;
 
-	Sphere = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere"));
-	SetRootComponent(Sphere);
+	SphereCollision = CreateDefaultSubobject<USphereComponent>(TEXT("SphereCollision"));
+	SetRootComponent(SphereCollision);
 
-	Sphere->SetSphereRadius(34.f);
-	Sphere->SetCollisionProfileName("Pawn");
-	Sphere->BodyInstance.bLockYTranslation = true; // 2D-translation (XZ-axis)
+	SphereCollision->SetSphereRadius(34.f);
+	SphereCollision->SetCollisionProfileName("Pawn");
+	SphereCollision->BodyInstance.bLockYTranslation = true; // 2D-translation (XZ-axis)
 
 	// 2D-rotation (XZ-axis)
-	Sphere->BodyInstance.bLockXRotation = true; 
-	Sphere->BodyInstance.bLockZRotation = true;
+	SphereCollision->BodyInstance.bLockXRotation = true; 
+	SphereCollision->BodyInstance.bLockZRotation = true;
 
 	Sprite = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Sprite"));
-	Sprite->SetupAttachment(Sphere);
+	Sprite->SetupAttachment(SphereCollision);
 
 	SetActorRotation(FRotator(0.f, 0.f, 0.f));
 }
@@ -99,9 +99,9 @@ void AGameMapVirusPawn::PostInitializeComponents()
 	Super::PostInitializeComponents();
 
 	// Setting physics
-	Sphere->SetMassOverrideInKg(NAME_None, 10.0f);
-	Sphere->SetEnableGravity(false);
-	Sphere->SetSimulatePhysics(true); // Enable physics
+	SphereCollision->SetMassOverrideInKg(NAME_None, 10.0f);
+	SphereCollision->SetEnableGravity(false);
+	SphereCollision->SetSimulatePhysics(true); // Enable physics
 }
 
 // Called when the game starts or when spawned

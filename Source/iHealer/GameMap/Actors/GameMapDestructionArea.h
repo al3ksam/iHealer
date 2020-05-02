@@ -18,6 +18,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	FORCEINLINE class UBoxComponent* GetArea() const { return Area; }
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
