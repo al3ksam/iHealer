@@ -121,17 +121,16 @@ void AGameMapVirusPawn::EndPlay(EEndPlayReason::Type EndPlayReason)
 
 EVirusRotationSpeeds::Type AGameMapVirusPawn::GetRandomRotationSpeed()
 {
-	const uint8 SpeedsCount = 3;
-	uint8 SpeedIndex = FMath::RandRange(1, SpeedsCount);
-
-	switch (SpeedIndex)
+	TArray<EVirusRotationSpeeds::Type> Speeds
 	{
-		case 1: return EVirusRotationSpeeds::Normal;
-		case 2: return EVirusRotationSpeeds::Medium;
-		case 3: return EVirusRotationSpeeds::Quick;
+		EVirusRotationSpeeds::Normal,
+		EVirusRotationSpeeds::Medium,
+		EVirusRotationSpeeds::Quick
+	};
 
-		default: return EVirusRotationSpeeds::None;
-	}
+	uint8 SpeedIndex = FMath::RandRange(0, Speeds.Num() - 1);
+
+	return Speeds[SpeedIndex];
 }
 
 // Change the Pawn position
