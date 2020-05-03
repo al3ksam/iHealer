@@ -5,7 +5,6 @@
 #include "EngineUtils.h"
 #include "Engine/TextRenderActor.h"
 #include "Components/TextRenderComponent.h"
-
 #include "iHealer/GameMap/Pawns/GameMapVirusPawn.h"
 #include "iHealer/GameMap/Actors/GameMapWall.h"
 
