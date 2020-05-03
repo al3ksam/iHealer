@@ -47,8 +47,8 @@ public:
 	virtual void StartRotate();
 	virtual void StopRotate();
 
-	FORCEINLINE bool isWalking() const { return bWalking_; }
-	FORCEINLINE bool isRotating() const { return bRotating_; }
+	FORCEINLINE bool isWalking() const { return this->bWalking_; }
+	FORCEINLINE bool isRotating() const { return this->bRotating_; }
 
 	FORCEINLINE class USphereComponent* GetSphereCollision() const { return SphereCollision; }
 	FORCEINLINE class UPaperFlipbookComponent* GetSprite() const { return Sprite; }
