@@ -50,7 +50,7 @@ void AGameMapVirusPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (this->bRotating_)
+	if (this->CanRotate())
 	{
 		this->Rotate(DeltaTime);
 	}
@@ -83,18 +83,21 @@ void AGameMapVirusPawn::StopWalking()
 
 void AGameMapVirusPawn::StartRotate()
 {
-	if (this->bRotating_) return;
+	if (this->isRotating()) return;
 
-	this->RotationSpeed_ = AGameMapVirusPawn::GetRandomRotationSpeed();
+	this->UpdateRotationSpeed();
+	this->UpdateTargetRotation();
 
-	this->bRotating_ = true;
+	this->SetCanRotateFlag(true);
+	this->SetRotatingFlag(true);
 }
 
 void AGameMapVirusPawn::StopRotate()
 {
-	if (!this->bRotating_) return;
+	if (!this->isRotating()) return;
 
-	this->bRotating_ = false;
+	this->SetCanRotateFlag(false);
+	this->SetRotatingFlag(false);
 }
 
 // Called after the actor's components have been initialized
@@ -134,6 +137,37 @@ EVirusRotationSpeeds::Type AGameMapVirusPawn::GetRandomRotationSpeed()
 	return Speeds[SpeedIndex];
 }
 
+void AGameMapVirusPawn::UpdateRotationSpeed()
+{
+	this->RotationSpeed_ = AGameMapVirusPawn::GetRandomRotationSpeed();
+}
+
+EVirusRotationSpeeds::Type AGameMapVirusPawn::GetRotationSpeed() const
+{
+	return this->RotationSpeed_;
+}
+
+void AGameMapVirusPawn::UpdateTargetRotation()
+{
+	const FQuat CurrentQuat = this->GetActorQuat();
+	this->TargetRotation_ = FRotator(2.f, 0.f, 0.f).Quaternion() * CurrentQuat;
+}
+
+FQuat AGameMapVirusPawn::GetTargetRotation()
+{
+	return this->TargetRotation_;
+}
+
+void AGameMapVirusPawn::SetRotatingFlag(const bool bValue)
+{
+	this->bRotating_ = bValue;
+}
+
+void AGameMapVirusPawn::SetCanRotateFlag(const bool bValue)
+{
+	this->bCanRotate_ = bValue;
+}
+
 // Change the Pawn position
 void AGameMapVirusPawn::Walking()
 {
@@ -143,11 +177,18 @@ void AGameMapVirusPawn::Walking()
 // Change the Pawn rotation
 void AGameMapVirusPawn::Rotate(float DeltaTime)
 {
-	 const FQuat CurrentQuat = this->GetActorQuat();
-	 static FQuat TargetRotation = FRotator(90.f, 0.f, 0.f).Quaternion() * CurrentQuat;
+	if (this->CanRotate() == false) return;
 
-	 const FQuat DeltaRotation = FMath::
-		 QInterpConstantTo(CurrentQuat, TargetRotation, DeltaTime, this->RotationSpeed_);
+	const FQuat CurrentQuat = this->GetActorQuat();
+	const FQuat TargetRotation = this->GetTargetRotation();
+
+	const FQuat DeltaRotation = FMath::
+		QInterpConstantTo(CurrentQuat, TargetRotation, DeltaTime, this->GetRotationSpeed());
+
+	if (DeltaRotation.Equals(TargetRotation))
+	{
+		 this->UpdateTargetRotation();
+	}
 	
 	SetActorRotation(DeltaRotation);
 }

@@ -21,9 +21,9 @@ namespace EVirusRotationSpeeds
 	using Type = float;
 
 	const Type None   = 0.f;
-	const Type Normal = 1.f;
-	const Type Medium = 2.f;
-	const Type Quick  = 3.f;
+	const Type Normal = 0.5f;
+	const Type Medium = 1.f;
+	const Type Quick  = 2.f;
 }
 
 UCLASS()
@@ -53,7 +53,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual void StopRotate();
 
+	UFUNCTION(BlueprintCallable)
 	FORCEINLINE bool isWalking() const { return this->bWalking_; }
+
+	UFUNCTION(BlueprintCallable)
 	FORCEINLINE bool isRotating() const { return this->bRotating_; }
 
 	FORCEINLINE class USphereComponent* GetSphereCollision() const { return SphereCollision; }
@@ -72,8 +75,24 @@ protected:
 private:
 	static EVirusRotationSpeeds::Type GetRandomRotationSpeed();
 
+	void UpdateRotationSpeed();
+	EVirusRotationSpeeds::Type GetRotationSpeed() const;
+
+	void UpdateTargetRotation();
+	FQuat GetTargetRotation();
+
+	bool CanRotate() const { return this->bCanRotate_; }
+
+	void SetRotatingFlag(const bool bValue);
+
+	void SetCanRotateFlag(const bool bValue);
+
 	void Walking(); // Change the Pawn position
 	void Rotate(float DeltaTime); // Change the Pawn rotation
+
+	FQuat TargetRotation_ = FQuat(0.f, 0.f, 0.f, 0.f);
+
+	bool bCanRotate_ = false;
 	
 	EVirusWalkingSpeeds::Type WalkingSpeed_ = EVirusWalkingSpeeds::None;
 	EVirusRotationSpeeds::Type RotationSpeed_ = EVirusRotationSpeeds::None;
