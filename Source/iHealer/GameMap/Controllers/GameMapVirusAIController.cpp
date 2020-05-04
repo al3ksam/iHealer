@@ -31,5 +31,13 @@ void AGameMapVirusAIController::OnPossess(APawn* InPawn)
 // Overridable native function for when this controller unpossesses its pawn
 void AGameMapVirusAIController::OnUnPossess()
 {
+	AGameMapVirusPawn* const Virus = Cast<AGameMapVirusPawn>(GetPawn());
+
+	if (Virus != nullptr)
+	{
+		Virus->StopRotate();
+		Virus->StopWalking();
+	}
+
 	Super::OnUnPossess();
 }

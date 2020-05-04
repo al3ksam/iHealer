@@ -118,9 +118,6 @@ void AGameMapVirusPawn::BeginPlay()
 void AGameMapVirusPawn::EndPlay(EEndPlayReason::Type EndPlayReason)
 {
 	Super::EndPlay(EndPlayReason);
-
-	if (this->bWalking_) this->StopWalking();
-	if (this->bRotating_) this->StopRotate();
 }
 
 EVirusRotationSpeeds::Type AGameMapVirusPawn::GetRandomRotationSpeed()
