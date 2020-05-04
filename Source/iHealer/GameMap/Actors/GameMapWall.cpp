@@ -16,11 +16,14 @@ AGameMapWall::AGameMapWall()
 	if (Wall)
 	{
 		SetRootComponent(Wall);
+
+		static ConstructorHelpers::FObjectFinder<UStaticMesh> Cube(TEXT("/Game/GameMap/Meshes/Cube.Cube"));
+
+		if (Cube.Succeeded())
+		{
+			Wall->SetStaticMesh(Cube.Object);
+		}
 	}
-
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> Cube(TEXT("/Game/GameMap/Meshes/Cube.Cube"));
-
-	if (Cube.Succeeded()) Wall->SetStaticMesh(Cube.Object);
 }
 
 // Called every frame

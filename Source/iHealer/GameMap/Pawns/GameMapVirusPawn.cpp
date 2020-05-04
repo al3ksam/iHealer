@@ -24,6 +24,7 @@ AGameMapVirusPawn::AGameMapVirusPawn()
 	bUseControllerRotationYaw = false;
 
 	SphereCollision = CreateDefaultSubobject<USphereComponent>(TEXT("SphereCollision"));
+	Sprite = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Sprite"));
 	
 	if (SphereCollision)
 	{
@@ -36,13 +37,11 @@ AGameMapVirusPawn::AGameMapVirusPawn()
 		SphereCollision->BodyInstance.bLockZRotation = true;
 
 		SetRootComponent(SphereCollision);
-	}	
 
-	Sprite = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Sprite"));
-
-	if (Sprite)
-	{
-		Sprite->SetupAttachment(SphereCollision);
+		if (Sprite)
+		{
+			Sprite->SetupAttachment(SphereCollision);
+		}
 	}
 }
 
