@@ -12,10 +12,14 @@ AGameMapDestructionArea::AGameMapDestructionArea()
 	PrimaryActorTick.bCanEverTick = false;
 
 	Area = CreateDefaultSubobject<UBoxComponent>("Area");
-	SetRootComponent(Area);
+	
+	if (Area)
+	{
+		Area->SetGenerateOverlapEvents(true);
+		Area->SetCollisionProfileName("OverlapAll");
 
-	Area->SetGenerateOverlapEvents(true);
-	Area->SetCollisionProfileName("OverlapAll");
+		SetRootComponent(Area);
+	}
 }
 
 // Called every frame
@@ -40,8 +44,8 @@ void AGameMapDestructionArea::OnOverlap(
 {
 	if (Actor == nullptr) return;
 
-	FString ActorClassName = Actor->GetClass()->GetName();
-	bool bVirus = ActorClassName == AGameMapVirusPawn::StaticClass()->GetName();
+	UClass* const ActorClass = Actor->GetClass();
+	const bool bVirus = ActorClass == AGameMapVirusPawn::StaticClass();
 
 	// Destroy a Virus
 	if (bVirus) Actor->Destroy();

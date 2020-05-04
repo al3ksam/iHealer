@@ -6,7 +6,6 @@
 #include "Components/InputComponent.h"
 #include "PaperFlipbookComponent.h"
 #include "TimerManager.h"
-
 #include "iHealer/GameMap/Controllers/GameMapVirusAIController.h"
 
 // Sets default values
@@ -17,7 +16,7 @@ AGameMapVirusPawn::AGameMapVirusPawn()
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
  	// Set this pawn to call Tick() every frame.
-	PrimaryActorTick.bCanEverTick = false;
+	PrimaryActorTick.bCanEverTick = true;
 
 	// Ignore the rotation from the controller
 	bUseControllerRotationPitch = false;
@@ -25,26 +24,37 @@ AGameMapVirusPawn::AGameMapVirusPawn()
 	bUseControllerRotationYaw = false;
 
 	SphereCollision = CreateDefaultSubobject<USphereComponent>(TEXT("SphereCollision"));
-	SetRootComponent(SphereCollision);
+	
+	if (SphereCollision)
+	{
+		SphereCollision->SetSphereRadius(34.f);
+		SphereCollision->SetCollisionProfileName("Pawn");
+		SphereCollision->BodyInstance.bLockYTranslation = true; // 2D-translation (XZ-axis)
 
-	SphereCollision->SetSphereRadius(34.f);
-	SphereCollision->SetCollisionProfileName("Pawn");
-	SphereCollision->BodyInstance.bLockYTranslation = true; // 2D-translation (XZ-axis)
+		// 2D-rotation (XZ-axis)
+		SphereCollision->BodyInstance.bLockXRotation = true;
+		SphereCollision->BodyInstance.bLockZRotation = true;
 
-	// 2D-rotation (XZ-axis)
-	SphereCollision->BodyInstance.bLockXRotation = true; 
-	SphereCollision->BodyInstance.bLockZRotation = true;
+		SetRootComponent(SphereCollision);
+	}	
 
 	Sprite = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Sprite"));
-	Sprite->SetupAttachment(SphereCollision);
 
-	SetActorRotation(FRotator(0.f, 0.f, 0.f));
+	if (Sprite)
+	{
+		Sprite->SetupAttachment(SphereCollision);
+	}
 }
 
 // Called every frame
 void AGameMapVirusPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if (this->bRotating_)
+	{
+		this->Rotate(DeltaTime);
+	}
 }
 
 // Called to bind functionality to input
@@ -78,17 +88,12 @@ void AGameMapVirusPawn::StartRotate()
 
 	this->RotationSpeed_ = AGameMapVirusPawn::GetRandomRotationSpeed();
 
-	GetWorld()->GetTimerManager()
-		.SetTimer(this->RotationTimerHandle_, this, &AGameMapVirusPawn::Rotate, 0.04f, true);
-
 	this->bRotating_ = true;
 }
 
 void AGameMapVirusPawn::StopRotate()
 {
 	if (!this->bRotating_) return;
-
-	GetWorld()->GetTimerManager().ClearTimer(this->RotationTimerHandle_);
 
 	this->bRotating_ = false;
 }
@@ -140,7 +145,13 @@ void AGameMapVirusPawn::Walking()
 }
 
 // Change the Pawn rotation
-void AGameMapVirusPawn::Rotate()
+void AGameMapVirusPawn::Rotate(float DeltaTime)
 {
-	this->AddActorLocalRotation(FRotator(1.f * this->RotationSpeed_, 0.f, 0.f), true);
+	 const FQuat CurrentQuat = this->GetActorQuat();
+	 static FQuat TargetRotation = FRotator(90.f, 0.f, 0.f).Quaternion() * CurrentQuat;
+
+	 const FQuat DeltaRotation = FMath::
+		 QInterpConstantTo(CurrentQuat, TargetRotation, DeltaTime, this->RotationSpeed_);
+	
+	SetActorRotation(DeltaRotation);
 }

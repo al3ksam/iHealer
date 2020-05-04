@@ -2,7 +2,6 @@
 
 
 #include "GameMapVirusAIController.h"
-
 #include "iHealer/GameMap/Pawns/GameMapVirusPawn.h"
 
 AGameMapVirusAIController::AGameMapVirusAIController()
@@ -20,7 +19,7 @@ void AGameMapVirusAIController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
 
-	AGameMapVirusPawn* Virus = Cast<AGameMapVirusPawn>(InPawn);
+	AGameMapVirusPawn* const Virus = Cast<AGameMapVirusPawn>(InPawn);
 
 	if (Virus != nullptr)
 	{

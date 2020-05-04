@@ -23,6 +23,8 @@ void AiHealerPlayerController::BeginPlay()
 
 	for (TActorIterator<ATextRenderActor> ActorIterator(GetWorld()); ActorIterator; ++ActorIterator)
 	{
+		if (*ActorIterator == nullptr) break;
+
 		ActorIterator->GetTextRender()->SetText(
 			FText::FromString(FString::FromInt(SizeX) + "x" + FString::FromInt(SizeY))
 		);

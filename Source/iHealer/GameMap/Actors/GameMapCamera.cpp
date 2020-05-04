@@ -5,7 +5,7 @@
 
 AGameMapCamera::AGameMapCamera()
 {
-	UCameraComponent* GameMapCameraComponent = this->GetCameraComponent();
+	UCameraComponent* const GameMapCameraComponent = this->GetCameraComponent();
 
 	// Setting the camera component for an orthogonal view 
 	GameMapCameraComponent->SetProjectionMode(ECameraProjectionMode::Orthographic);

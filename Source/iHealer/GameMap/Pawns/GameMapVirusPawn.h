@@ -41,10 +41,16 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UFUNCTION(BlueprintCallable)
 	virtual void StartWalking();
+
+	UFUNCTION(BlueprintCallable)
 	virtual void StopWalking();
 
+	UFUNCTION(BlueprintCallable)
 	virtual void StartRotate();
+
+	UFUNCTION(BlueprintCallable)
 	virtual void StopRotate();
 
 	FORCEINLINE bool isWalking() const { return this->bWalking_; }
@@ -67,7 +73,7 @@ private:
 	static EVirusRotationSpeeds::Type GetRandomRotationSpeed();
 
 	void Walking(); // Change the Pawn position
-	void Rotate(); // Change the Pawn rotation
+	void Rotate(float DeltaTime); // Change the Pawn rotation
 	
 	EVirusWalkingSpeeds::Type WalkingSpeed_ = EVirusWalkingSpeeds::None;
 	EVirusRotationSpeeds::Type RotationSpeed_ = EVirusRotationSpeeds::None;
@@ -75,7 +81,6 @@ private:
 	bool bWalking_ = false;
 	bool bRotating_ = false;
 
-	FTimerHandle RotationTimerHandle_; // Timer handle for the rotation
 	FTimerHandle WalkingTimerHandle_; // Timer handle for the walking 
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))

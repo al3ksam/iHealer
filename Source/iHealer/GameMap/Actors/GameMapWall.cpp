@@ -12,7 +12,11 @@ AGameMapWall::AGameMapWall()
 	PrimaryActorTick.bCanEverTick = false;
 
 	Wall = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Wall"));
-	SetRootComponent(Wall); 
+
+	if (Wall)
+	{
+		SetRootComponent(Wall);
+	}
 
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> Cube(TEXT("/Game/GameMap/Meshes/Cube.Cube"));
 

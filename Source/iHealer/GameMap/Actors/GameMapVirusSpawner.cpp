@@ -11,12 +11,15 @@ AGameMapVirusSpawner::AGameMapVirusSpawner()
 	PrimaryActorTick.bCanEverTick = false;
 
 	Spawner = CreateDefaultSubobject<UBoxComponent>(TEXT("Spawner"));
-	SetRootComponent(Spawner);
+	
+	if (Spawner)
+	{
+		Spawner->SetGenerateOverlapEvents(false);
+		Spawner->SetCollisionProfileName("NoCollision");
+		Spawner->SetMobility(EComponentMobility::Static);
 
-	Spawner->SetGenerateOverlapEvents(false);
-	Spawner->SetCollisionProfileName("NoCollision");
-
-	Spawner->SetMobility(EComponentMobility::Static);
+		SetRootComponent(Spawner);
+	}
 }
 
 // Called every frame
