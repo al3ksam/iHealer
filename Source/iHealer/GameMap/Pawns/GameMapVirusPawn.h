@@ -81,11 +81,7 @@ private:
 	void UpdateTargetRotation();
 	FQuat GetTargetRotation();
 
-	bool CanRotate() const { return this->bCanRotate_; }
-
-	void SetRotatingFlag(const bool bValue);
-
-	void SetCanRotateFlag(const bool bValue);
+	FORCEINLINE bool CanRotate() const { return this->bCanRotate_; }
 
 	void Walking(); // Change the Pawn position
 	void Rotate(float DeltaTime); // Change the Pawn rotation

@@ -83,21 +83,21 @@ void AGameMapVirusPawn::StopWalking()
 
 void AGameMapVirusPawn::StartRotate()
 {
-	if (this->isRotating()) return;
+	if (this->bRotating_) return;
 
 	this->UpdateRotationSpeed();
 	this->UpdateTargetRotation();
 
-	this->SetCanRotateFlag(true);
-	this->SetRotatingFlag(true);
+	this->bCanRotate_ = true;
+	this->bRotating_  = true;
 }
 
 void AGameMapVirusPawn::StopRotate()
 {
-	if (!this->isRotating()) return;
+	if (!this->bRotating_) return;
 
-	this->SetCanRotateFlag(false);
-	this->SetRotatingFlag(false);
+	this->bCanRotate_ = false;
+	this->bRotating_ = false;
 }
 
 // Called after the actor's components have been initialized
@@ -156,16 +156,6 @@ void AGameMapVirusPawn::UpdateTargetRotation()
 FQuat AGameMapVirusPawn::GetTargetRotation()
 {
 	return this->TargetRotation_;
-}
-
-void AGameMapVirusPawn::SetRotatingFlag(const bool bValue)
-{
-	this->bRotating_ = bValue;
-}
-
-void AGameMapVirusPawn::SetCanRotateFlag(const bool bValue)
-{
-	this->bCanRotate_ = bValue;
 }
 
 // Change the Pawn position
