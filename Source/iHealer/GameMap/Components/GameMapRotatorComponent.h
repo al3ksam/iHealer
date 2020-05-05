@@ -20,13 +20,13 @@ namespace ERotationSpeeds
 struct RotationsSpeeds final
 {
 	/** Returns the number of speeds  */
-	FORCEINLINE static const int Count()
+	static constexpr int Count()
 	{
 		return 3;
 	}
 
 	/** Returns an array of speeds */
-	FORCEINLINE static const ERotationSpeeds::Type* Get()
+	static const ERotationSpeeds::Type* Get()
 	{
 		static const ERotationSpeeds::Type Speeds[]
 		{

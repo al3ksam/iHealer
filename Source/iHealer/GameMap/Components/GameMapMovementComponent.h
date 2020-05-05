@@ -20,13 +20,13 @@ namespace EMovementSpeeds
 struct MovementSpeeds final
 {
 	/** Returns the number of speeds  */
-	FORCEINLINE static const int Count()
+	static constexpr int Count()
 	{
 		return 3;
 	}
 
 	/** Returns an array of speeds */
-	FORCEINLINE static const EMovementSpeeds::Type* Get()
+	static const EMovementSpeeds::Type* Get()
 	{
 		static const EMovementSpeeds::Type Speeds[]
 		{
