@@ -8,18 +8,9 @@
 #include "iHealer/Interfaces/RotatorInterface.h"
 #include "GameMapVirusPawn.generated.h"
 
-namespace EVirusWalkingSpeeds
-{
-	using Type = float;
-
-	const Type None   = 0.f;
-	const Type Normal = 10.f;
-	const Type Medium = 14.f;
-	const Type Quick  = 18.f;
-}
-
 UCLASS()
-class IHEALER_API AGameMapVirusPawn : public APawn
+class IHEALER_API AGameMapVirusPawn 
+	: public APawn
 	, public IMovementInterface
 	, public IRotatorInterface
 {
@@ -36,19 +27,19 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UFUNCTION(BlueprintCallable)
-	virtual void StartMove() override;
+	virtual void StartMoving() override;
 
 	UFUNCTION(BlueprintCallable)
-	virtual void StopMove() override;
-
-	UFUNCTION(BlueprintCallable)
-	virtual void StartRotate() override;
-
-	UFUNCTION(BlueprintCallable)
-	virtual void StopRotate() override;
+	virtual void StopMoving() override;
 
 	UFUNCTION(BlueprintCallable)
 	virtual bool isMoving() const override;
+
+	UFUNCTION(BlueprintCallable)
+	virtual void StartRotating() override;
+
+	UFUNCTION(BlueprintCallable)
+	virtual void StopRotating() override;
 
 	UFUNCTION(BlueprintCallable)
 	virtual bool isRotating() const override;
@@ -67,17 +58,14 @@ protected:
 	virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;	
 
 private:
-	void Walking(); // Change the Pawn position
-	
-	EVirusWalkingSpeeds::Type WalkingSpeed_ = EVirusWalkingSpeeds::None;
-
-	bool bWalking_ = false;
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class USphereComponent* SphereCollision;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class UPaperFlipbookComponent* Sprite;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	class UGameMapMovementComponent* Mover;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class UGameMapRotatorComponent* Rotator;

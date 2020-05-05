@@ -22,8 +22,7 @@ void UGameMapRotatorComponent::TickComponent(float DeltaTime, ELevelTick TickTyp
 	}
 }
 
-// Start rotate the pawn
-void UGameMapRotatorComponent::StartRotate()
+void UGameMapRotatorComponent::StartRotating()
 {
 	if (this->bRotating_) return;
 
@@ -36,8 +35,7 @@ void UGameMapRotatorComponent::StartRotate()
 	this->bRotating_ = true;
 }
 
-// Stop rotate the pawn
-void UGameMapRotatorComponent::StopRotate()
+void UGameMapRotatorComponent::StopRotating()
 {
 	if (!this->bRotating_) return;
 
@@ -45,7 +43,6 @@ void UGameMapRotatorComponent::StopRotate()
 	this->bRotating_ = false;
 }
 
-// Returns the pawn rotation state
 bool UGameMapRotatorComponent::isRotating() const
 {
 	return this->bRotating_;
@@ -57,13 +54,13 @@ void UGameMapRotatorComponent::BeginPlay()
 	Super::BeginPlay();
 }
 
-EVirusRotationSpeeds::Type UGameMapRotatorComponent::GetRandomRotationSpeed()
+ERotationSpeeds::Type UGameMapRotatorComponent::GetRandomRotationSpeed()
 {
-	TArray<EVirusRotationSpeeds::Type> Speeds
+	TArray<ERotationSpeeds::Type> Speeds
 	{
-		EVirusRotationSpeeds::Normal,
-		EVirusRotationSpeeds::Medium,
-		EVirusRotationSpeeds::Quick
+		ERotationSpeeds::Normal,
+		ERotationSpeeds::Medium,
+		ERotationSpeeds::Quick
 	};
 
 	uint8 SpeedIndex = FMath::RandRange(0, Speeds.Num() - 1);
@@ -71,7 +68,6 @@ EVirusRotationSpeeds::Type UGameMapRotatorComponent::GetRandomRotationSpeed()
 	return Speeds[SpeedIndex];
 }
 
-// Rotate the Pawn
 void UGameMapRotatorComponent::Rotate(float DeltaTime)
 {
 	if (!this->bCanRotate_) return;

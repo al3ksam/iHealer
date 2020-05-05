@@ -23,8 +23,8 @@ void AGameMapVirusAIController::OnPossess(APawn* InPawn)
 
 	if (Virus != nullptr)
 	{
-		Virus->StartRotate();
-		Virus->StartMove();
+		Virus->StartRotating();
+		Virus->StartMoving();
 	}
 }
 
@@ -35,8 +35,8 @@ void AGameMapVirusAIController::OnUnPossess()
 
 	if (Virus != nullptr)
 	{
-		Virus->StopRotate();
-		Virus->StopMove();
+		Virus->StopRotating();
+		Virus->StopMoving();
 	}
 
 	Super::OnUnPossess();

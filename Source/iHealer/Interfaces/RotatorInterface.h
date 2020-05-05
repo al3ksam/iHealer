@@ -18,7 +18,7 @@ class IHEALER_API IRotatorInterface
 	GENERATED_BODY()
 
 public:
-	virtual void StartRotate() = 0;
-	virtual void StopRotate() = 0;
+	virtual void StartRotating() = 0;
+	virtual void StopRotating() = 0;
 	virtual bool isRotating() const = 0;
 };

@@ -4,60 +4,56 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "iHealer/Interfaces/RotatorInterface.h"
-#include "GameMapRotatorComponent.generated.h"
+#include "iHealer/Interfaces/MovementInterface.h"
+#include "GameMapMovementComponent.generated.h"
 
-namespace ERotationSpeeds
+namespace EMovementSpeeds
 {
 	using Type = float;
 
 	const Type None = 0.f;
-	const Type Normal = 0.5f;
-	const Type Medium = 1.f;
-	const Type Quick = 2.f;
+	const Type Normal = 10.f;
+	const Type Medium = 14.f;
+	const Type Quick = 18.f;
 }
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
-class IHEALER_API UGameMapRotatorComponent 
+class IHEALER_API UGameMapMovementComponent 
 	: public UActorComponent
-	, public IRotatorInterface
+	, public IMovementInterface
 {
 	GENERATED_BODY()
 
 public:	
 	// Sets default values for this component's properties
-	UGameMapRotatorComponent();
+	UGameMapMovementComponent();
 
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, 
 		FActorComponentTickFunction* ThisTickFunction) override;
 
 	UFUNCTION(BlueprintCallable)
-	virtual void StartRotating() override;
+	virtual void StartMoving() override;
 
 	UFUNCTION(BlueprintCallable)
-	virtual void StopRotating() override; 
+	virtual void StopMoving() override;
 
 	UFUNCTION(BlueprintCallable)
-	virtual bool isRotating() const override; 
+	virtual bool isMoving() const override;
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
 private:
-	static ERotationSpeeds::Type GetRandomRotationSpeed();
+	static EMovementSpeeds::Type GetRandomMovementSpeed();
 
-	void Rotate(float DeltaTime);
-
-	void UpdateTargetRotation();
+	void Move(float DeltaTime);
 
 	class AActor* Owner_ = nullptr;
 
-	FQuat TargetRotation_ = FQuat(0.f, 0.f, 0.f, 0.f);
+	EMovementSpeeds::Type MovementSpeed_ = EMovementSpeeds::None;
 
-	ERotationSpeeds::Type RotationSpeed_ = ERotationSpeeds::None;
-
-	bool bCanRotate_ = false;
-	bool bRotating_ = false;
+	bool bCanMove_ = false;
+	bool bMoving_ = false;
 };

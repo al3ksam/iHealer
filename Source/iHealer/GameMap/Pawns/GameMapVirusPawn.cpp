@@ -2,12 +2,13 @@
 
 
 #include "GameMapVirusPawn.h"
+#include "iHealer/GameMap/Components/GameMapMovementComponent.h"
+#include "iHealer/GameMap/Components/GameMapRotatorComponent.h"
+#include "iHealer/GameMap/Controllers/GameMapVirusAIController.h"
 #include "Components/SphereComponent.h"
 #include "Components/InputComponent.h"
 #include "PaperFlipbookComponent.h"
 #include "TimerManager.h"
-#include "iHealer/GameMap/Controllers/GameMapVirusAIController.h"
-#include "iHealer/GameMap/Components/GameMapRotatorComponent.h"
 
 // Sets default values
 AGameMapVirusPawn::AGameMapVirusPawn()
@@ -27,6 +28,7 @@ AGameMapVirusPawn::AGameMapVirusPawn()
 	SphereCollision = CreateDefaultSubobject<USphereComponent>(TEXT("SphereCollision"));
 	Sprite = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Sprite"));
 
+	Mover = CreateDefaultSubobject<UGameMapMovementComponent>(TEXT("Mover"));
 	Rotator = CreateDefaultSubobject<UGameMapRotatorComponent>(TEXT("Rotator"));
 	
 	if (SphereCollision)
@@ -60,53 +62,41 @@ void AGameMapVirusPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
-void AGameMapVirusPawn::StartMove()
+void AGameMapVirusPawn::StartMoving()
 {
-}
-
-void AGameMapVirusPawn::StopMove()
-{
-}
-
-/*
-void AGameMapVirusPawn::StartWalking()
-{
-	if (this->bWalking_) return;
-
-	GetWorld()->GetTimerManager()
-		.SetTimer(this->WalkingTimerHandle_, this, &AGameMapVirusPawn::Walking, 0.04f, true);
-
-	this->bWalking_ = true;
-}
-
-void AGameMapVirusPawn::StopWalking()
-{
-	if (!this->bWalking_) return;
-
-	GetWorld()->GetTimerManager().ClearTimer(this->WalkingTimerHandle_);
-
-	this->bWalking_ = false;
-}*/
-
-void AGameMapVirusPawn::StartRotate()
-{
-	if (Rotator != nullptr)
+	if (Mover != nullptr)
 	{
-		Rotator->StartRotate();
+		Mover->StartMoving();
 	}
 }
 
-void AGameMapVirusPawn::StopRotate()
+void AGameMapVirusPawn::StopMoving()
 {
-	if (Rotator != nullptr)
+	if (Mover != nullptr)
 	{
-		Rotator->StopRotate();
+		Mover->StopMoving();
 	}
 }
 
 bool AGameMapVirusPawn::isMoving() const
 {
-	return false;
+	return Mover != nullptr ? Mover->isMoving() : false;
+}
+
+void AGameMapVirusPawn::StartRotating()
+{
+	if (Rotator != nullptr)
+	{
+		Rotator->StartRotating();
+	}
+}
+
+void AGameMapVirusPawn::StopRotating()
+{
+	if (Rotator != nullptr)
+	{
+		Rotator->StopRotating();
+	}
 }
 
 bool AGameMapVirusPawn::isRotating() const
@@ -135,10 +125,4 @@ void AGameMapVirusPawn::BeginPlay()
 void AGameMapVirusPawn::EndPlay(EEndPlayReason::Type EndPlayReason)
 {
 	Super::EndPlay(EndPlayReason);
-}
-
-// Change the Pawn position
-void AGameMapVirusPawn::Walking()
-{
-	this->AddActorWorldOffset(FVector(0.f, 0.f, -1.f * this->WalkingSpeed_), true);
 }

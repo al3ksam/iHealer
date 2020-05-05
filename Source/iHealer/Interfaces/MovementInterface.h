@@ -18,7 +18,7 @@ class IHEALER_API IMovementInterface
 	GENERATED_BODY()
 
 public:
-	virtual void StartMove() = 0;
-	virtual void StopMove() = 0;
+	virtual void StartMoving() = 0;
+	virtual void StopMoving() = 0;
 	virtual bool isMoving() const = 0;
 };
