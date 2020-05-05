@@ -12,9 +12,9 @@ namespace EMovementSpeeds
 	using Type = float;
 
 	const Type None = 0.f;
-	const Type Normal = 10.f;
-	const Type Medium = 14.f;
-	const Type Quick = 18.f;
+	const Type Normal = 40.f;
+	const Type Medium = 60.f;
+	const Type Quick = 80.f;
 }
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
@@ -50,7 +50,11 @@ private:
 
 	void Move(float DeltaTime);
 
+	void UpdateTargetLocation();
+
 	class AActor* Owner_ = nullptr;
+
+	FVector TargetLocation_ = FVector(0.f, 0.f, 0.f);
 
 	EMovementSpeeds::Type MovementSpeed_ = EMovementSpeeds::None;
 

@@ -2,6 +2,7 @@
 
 
 #include "GameMapMovementComponent.h"
+#include "GameFramework/Actor.h"
 
 // Sets default values for this component's properties
 UGameMapMovementComponent::UGameMapMovementComponent()
@@ -28,6 +29,7 @@ void UGameMapMovementComponent::StartMoving()
 	this->Owner_ = GetOwner();
 
 	this->MovementSpeed_ = UGameMapMovementComponent::GetRandomMovementSpeed();
+	this->UpdateTargetLocation();
 
 	this->bCanMove_ = true;
 	this->bMoving_ = true;
@@ -68,7 +70,30 @@ EMovementSpeeds::Type UGameMapMovementComponent::GetRandomMovementSpeed()
 
 void UGameMapMovementComponent::Move(float DeltaTime)
 {
-	/*
-	this->AddActorWorldOffset(FVector(0.f, 0.f, -1.f * this->WalkingSpeed_), true);
-	*/
+	if (!this->bCanMove_) return;
+
+	if (this->Owner_ != nullptr)
+	{
+		const FVector CurrentLocation = this->Owner_->GetActorLocation();
+
+		const FVector DeltaLocation = FMath::
+			VInterpConstantTo(CurrentLocation, this->TargetLocation_, DeltaTime, this->MovementSpeed_);
+
+		if (DeltaLocation.Equals(this->TargetLocation_))
+		{
+			this->UpdateTargetLocation();
+		}
+
+		this->Owner_->SetActorLocation(DeltaLocation, true);
+	}
+}
+
+void UGameMapMovementComponent::UpdateTargetLocation()
+{
+	if (this->Owner_ != nullptr)
+	{
+		const FVector CurrentLocation = this->Owner_->GetActorLocation();
+
+		this->TargetLocation_ = CurrentLocation + FVector(0.f, 0.f, -10.f);
+	}
 }
