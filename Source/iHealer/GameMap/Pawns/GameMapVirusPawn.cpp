@@ -7,6 +7,7 @@
 #include "PaperFlipbookComponent.h"
 #include "TimerManager.h"
 #include "iHealer/GameMap/Controllers/GameMapVirusAIController.h"
+#include "iHealer/GameMap/Components/GameMapRotatorComponent.h"
 
 // Sets default values
 AGameMapVirusPawn::AGameMapVirusPawn()
@@ -25,6 +26,8 @@ AGameMapVirusPawn::AGameMapVirusPawn()
 
 	SphereCollision = CreateDefaultSubobject<USphereComponent>(TEXT("SphereCollision"));
 	Sprite = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Sprite"));
+
+	Rotator = CreateDefaultSubobject<UGameMapRotatorComponent>(TEXT("Rotator"));
 	
 	if (SphereCollision)
 	{
@@ -49,11 +52,6 @@ AGameMapVirusPawn::AGameMapVirusPawn()
 void AGameMapVirusPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	if (this->CanRotate())
-	{
-		this->Rotate(DeltaTime);
-	}
 }
 
 // Called to bind functionality to input
@@ -62,6 +60,15 @@ void AGameMapVirusPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
+void AGameMapVirusPawn::StartMove()
+{
+}
+
+void AGameMapVirusPawn::StopMove()
+{
+}
+
+/*
 void AGameMapVirusPawn::StartWalking()
 {
 	if (this->bWalking_) return;
@@ -79,25 +86,32 @@ void AGameMapVirusPawn::StopWalking()
 	GetWorld()->GetTimerManager().ClearTimer(this->WalkingTimerHandle_);
 
 	this->bWalking_ = false;
-}
+}*/
 
 void AGameMapVirusPawn::StartRotate()
 {
-	if (this->bRotating_) return;
-
-	this->UpdateRotationSpeed();
-	this->UpdateTargetRotation();
-
-	this->bCanRotate_ = true;
-	this->bRotating_  = true;
+	if (Rotator != nullptr)
+	{
+		Rotator->StartRotate();
+	}
 }
 
 void AGameMapVirusPawn::StopRotate()
 {
-	if (!this->bRotating_) return;
+	if (Rotator != nullptr)
+	{
+		Rotator->StopRotate();
+	}
+}
 
-	this->bCanRotate_ = false;
-	this->bRotating_ = false;
+bool AGameMapVirusPawn::isMoving() const
+{
+	return false;
+}
+
+bool AGameMapVirusPawn::isRotating() const
+{
+	return Rotator != nullptr ? Rotator->isRotating() : false;
 }
 
 // Called after the actor's components have been initialized
@@ -123,62 +137,8 @@ void AGameMapVirusPawn::EndPlay(EEndPlayReason::Type EndPlayReason)
 	Super::EndPlay(EndPlayReason);
 }
 
-EVirusRotationSpeeds::Type AGameMapVirusPawn::GetRandomRotationSpeed()
-{
-	TArray<EVirusRotationSpeeds::Type> Speeds
-	{
-		EVirusRotationSpeeds::Normal,
-		EVirusRotationSpeeds::Medium,
-		EVirusRotationSpeeds::Quick
-	};
-
-	uint8 SpeedIndex = FMath::RandRange(0, Speeds.Num() - 1);
-
-	return Speeds[SpeedIndex];
-}
-
-void AGameMapVirusPawn::UpdateRotationSpeed()
-{
-	this->RotationSpeed_ = AGameMapVirusPawn::GetRandomRotationSpeed();
-}
-
-EVirusRotationSpeeds::Type AGameMapVirusPawn::GetRotationSpeed() const
-{
-	return this->RotationSpeed_;
-}
-
-void AGameMapVirusPawn::UpdateTargetRotation()
-{
-	const FQuat CurrentQuat = this->GetActorQuat();
-	this->TargetRotation_ = FRotator(2.f, 0.f, 0.f).Quaternion() * CurrentQuat;
-}
-
-FQuat AGameMapVirusPawn::GetTargetRotation()
-{
-	return this->TargetRotation_;
-}
-
 // Change the Pawn position
 void AGameMapVirusPawn::Walking()
 {
 	this->AddActorWorldOffset(FVector(0.f, 0.f, -1.f * this->WalkingSpeed_), true);
-}
-
-// Change the Pawn rotation
-void AGameMapVirusPawn::Rotate(float DeltaTime)
-{
-	if (this->CanRotate() == false) return;
-
-	const FQuat CurrentQuat = this->GetActorQuat();
-	const FQuat TargetRotation = this->GetTargetRotation();
-
-	const FQuat DeltaRotation = FMath::
-		QInterpConstantTo(CurrentQuat, TargetRotation, DeltaTime, this->GetRotationSpeed());
-
-	if (DeltaRotation.Equals(TargetRotation))
-	{
-		 this->UpdateTargetRotation();
-	}
-	
-	SetActorRotation(DeltaRotation);
 }

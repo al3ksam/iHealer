@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "iHealer/Interfaces/MovementInterface.h"
+#include "iHealer/Interfaces/RotatorInterface.h"
 #include "GameMapVirusPawn.generated.h"
 
 namespace EVirusWalkingSpeeds
@@ -16,18 +18,10 @@ namespace EVirusWalkingSpeeds
 	const Type Quick  = 18.f;
 }
 
-namespace EVirusRotationSpeeds
-{
-	using Type = float;
-
-	const Type None   = 0.f;
-	const Type Normal = 0.5f;
-	const Type Medium = 1.f;
-	const Type Quick  = 2.f;
-}
-
 UCLASS()
 class IHEALER_API AGameMapVirusPawn : public APawn
+	, public IMovementInterface
+	, public IRotatorInterface
 {
 	GENERATED_BODY()
 
@@ -42,22 +36,22 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UFUNCTION(BlueprintCallable)
-	virtual void StartWalking();
+	virtual void StartMove() override;
 
 	UFUNCTION(BlueprintCallable)
-	virtual void StopWalking();
+	virtual void StopMove() override;
 
 	UFUNCTION(BlueprintCallable)
-	virtual void StartRotate();
+	virtual void StartRotate() override;
 
 	UFUNCTION(BlueprintCallable)
-	virtual void StopRotate();
+	virtual void StopRotate() override;
 
 	UFUNCTION(BlueprintCallable)
-	FORCEINLINE bool isWalking() const { return this->bWalking_; }
+	virtual bool isMoving() const override;
 
 	UFUNCTION(BlueprintCallable)
-	FORCEINLINE bool isRotating() const { return this->bRotating_; }
+	virtual bool isRotating() const override;
 
 	FORCEINLINE class USphereComponent* GetSphereCollision() const { return SphereCollision; }
 	FORCEINLINE class UPaperFlipbookComponent* GetSprite() const { return Sprite; }
@@ -73,34 +67,18 @@ protected:
 	virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;	
 
 private:
-	static EVirusRotationSpeeds::Type GetRandomRotationSpeed();
-
-	void UpdateRotationSpeed();
-	EVirusRotationSpeeds::Type GetRotationSpeed() const;
-
-	void UpdateTargetRotation();
-	FQuat GetTargetRotation();
-
-	FORCEINLINE bool CanRotate() const { return this->bCanRotate_; }
-
 	void Walking(); // Change the Pawn position
-	void Rotate(float DeltaTime); // Change the Pawn rotation
-
-	FQuat TargetRotation_ = FQuat(0.f, 0.f, 0.f, 0.f);
-
-	bool bCanRotate_ = false;
 	
 	EVirusWalkingSpeeds::Type WalkingSpeed_ = EVirusWalkingSpeeds::None;
-	EVirusRotationSpeeds::Type RotationSpeed_ = EVirusRotationSpeeds::None;
 
 	bool bWalking_ = false;
-	bool bRotating_ = false;
-
-	FTimerHandle WalkingTimerHandle_; // Timer handle for the walking 
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class USphereComponent* SphereCollision;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class UPaperFlipbookComponent* Sprite;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	class UGameMapRotatorComponent* Rotator;
 };
