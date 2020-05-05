@@ -32,13 +32,8 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, 
 		FActorComponentTickFunction* ThisTickFunction) override;
 
-	UFUNCTION(BlueprintCallable)
 	virtual void StartMoving() override;
-
-	UFUNCTION(BlueprintCallable)
 	virtual void StopMoving() override;
-
-	UFUNCTION(BlueprintCallable)
 	virtual bool isMoving() const override;
 
 protected:
