@@ -28,7 +28,7 @@ void UGameMapMovementComponent::StartMoving()
 
 	this->Owner_ = GetOwner();
 
-	this->MovementSpeed_ = UGameMapMovementComponent::GetRandomMovementSpeed();
+	this->MovementSpeed_ = MovementSpeeds::GetRandom();
 	this->UpdateTargetLocation();
 
 	this->bCanMove_ = true;
@@ -52,20 +52,6 @@ bool UGameMapMovementComponent::isMoving() const
 void UGameMapMovementComponent::BeginPlay()
 {
 	Super::BeginPlay();
-}
-
-EMovementSpeeds::Type UGameMapMovementComponent::GetRandomMovementSpeed()
-{
-	TArray<EMovementSpeeds::Type> Speeds
-	{
-		EMovementSpeeds::Normal,
-		EMovementSpeeds::Medium,
-		EMovementSpeeds::Quick
-	};
-
-	uint8 SpeedIndex = FMath::RandRange(0, Speeds.Num() - 1);
-
-	return Speeds[SpeedIndex];
 }
 
 void UGameMapMovementComponent::Move(float DeltaTime)

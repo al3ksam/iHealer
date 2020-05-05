@@ -3,6 +3,7 @@
 
 #include "GameMapRotatorComponent.h"
 #include "GameFramework/Actor.h"
+#include "Containers/StaticArray.h"
 
 // Sets default values for this component's properties
 UGameMapRotatorComponent::UGameMapRotatorComponent()
@@ -28,7 +29,7 @@ void UGameMapRotatorComponent::StartRotating()
 
 	this->Owner_ = GetOwner();
 
-	this->RotationSpeed_ = UGameMapRotatorComponent::GetRandomRotationSpeed();
+	this->RotationSpeed_ = RotationsSpeeds::GetRandom();
 	this->UpdateTargetRotation();
 
 	this->bCanRotate_ = true;
@@ -52,20 +53,6 @@ bool UGameMapRotatorComponent::isRotating() const
 void UGameMapRotatorComponent::BeginPlay()
 {
 	Super::BeginPlay();
-}
-
-ERotationSpeeds::Type UGameMapRotatorComponent::GetRandomRotationSpeed()
-{
-	TArray<ERotationSpeeds::Type> Speeds
-	{
-		ERotationSpeeds::Normal,
-		ERotationSpeeds::Medium,
-		ERotationSpeeds::Quick
-	};
-
-	uint8 SpeedIndex = FMath::RandRange(0, Speeds.Num() - 1);
-
-	return Speeds[SpeedIndex];
 }
 
 void UGameMapRotatorComponent::Rotate(float DeltaTime)

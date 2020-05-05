@@ -17,6 +17,39 @@ namespace EMovementSpeeds
 	const Type Quick = 80.f;
 }
 
+struct MovementSpeeds final
+{
+	/** Returns the number of speeds  */
+	FORCEINLINE static const int Count()
+	{
+		return 3;
+	}
+
+	/** Returns an array of speeds */
+	FORCEINLINE static const EMovementSpeeds::Type* Get()
+	{
+		static const EMovementSpeeds::Type Speeds[]
+		{
+			EMovementSpeeds::Normal,
+			EMovementSpeeds::Medium,
+			EMovementSpeeds::Quick
+		};
+
+		return Speeds;
+	}
+
+	/** Returns a random speed */
+	static const EMovementSpeeds::Type GetRandom()
+	{
+		const uint8 SpeedIndex = FMath::RandRange(0, MovementSpeeds::Count() - 1);
+
+		return MovementSpeeds::Get()[SpeedIndex];
+	}
+
+	MovementSpeeds(const MovementSpeeds&) = delete;
+	MovementSpeeds& operator=(const MovementSpeeds&) = delete;
+};
+
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class IHEALER_API UGameMapMovementComponent 
 	: public UActorComponent
@@ -41,8 +74,6 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	static EMovementSpeeds::Type GetRandomMovementSpeed();
-
 	void Move(float DeltaTime);
 
 	void UpdateTargetLocation();

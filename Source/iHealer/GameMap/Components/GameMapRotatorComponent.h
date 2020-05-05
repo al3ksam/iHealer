@@ -17,6 +17,39 @@ namespace ERotationSpeeds
 	const Type Quick = 2.f;
 }
 
+struct RotationsSpeeds final
+{
+	/** Returns the number of speeds  */
+	FORCEINLINE static const int Count()
+	{
+		return 3;
+	}
+
+	/** Returns an array of speeds */
+	FORCEINLINE static const ERotationSpeeds::Type* Get()
+	{
+		static const ERotationSpeeds::Type Speeds[]
+		{
+			ERotationSpeeds::Normal,
+			ERotationSpeeds::Medium,
+			ERotationSpeeds::Quick
+		};
+
+		return Speeds;
+	}
+
+	/** Returns a random speed */
+	static const ERotationSpeeds::Type GetRandom()
+	{
+		const uint8 SpeedIndex = FMath::RandRange(0, RotationsSpeeds::Count() - 1);
+
+		return RotationsSpeeds::Get()[SpeedIndex];
+	}
+
+	RotationsSpeeds(const RotationsSpeeds&) = delete;
+	RotationsSpeeds& operator=(const RotationsSpeeds&) = delete;
+};
+
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class IHEALER_API UGameMapRotatorComponent 
 	: public UActorComponent
@@ -41,10 +74,8 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	static ERotationSpeeds::Type GetRandomRotationSpeed();
-
 	void Rotate(float DeltaTime);
-
+	
 	void UpdateTargetRotation();
 
 	class AActor* Owner_ = nullptr;
