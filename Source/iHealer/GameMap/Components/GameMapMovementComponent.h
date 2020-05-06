@@ -39,7 +39,7 @@ struct MovementSpeeds final
 
 		const uint8 SpeedIndex = FMath::RandRange(0, SpeedsNum - 1);
 
-		bool bValidIndex = SpeedIndex >= 0 && SpeedIndex < SpeedsNum;
+		const bool bValidIndex = SpeedIndex >= 0 && SpeedIndex < SpeedsNum;
 
 		return bValidIndex ? MovementSpeeds::Get()[SpeedIndex] : EMovementSpeeds::None;
 	}
