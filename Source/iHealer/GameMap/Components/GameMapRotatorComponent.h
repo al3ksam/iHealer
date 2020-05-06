@@ -19,16 +19,10 @@ namespace ERotationSpeeds
 
 struct RotationsSpeeds final
 {
-	/** Returns the number of speeds  */
-	static constexpr int Count()
-	{
-		return 3;
-	}
-
 	/** Returns an array of speeds */
-	static const ERotationSpeeds::Type* Get()
+	static const TArray<ERotationSpeeds::Type> Get()
 	{
-		static const ERotationSpeeds::Type Speeds[]
+		static const TArray<ERotationSpeeds::Type> Speeds
 		{
 			ERotationSpeeds::Normal,
 			ERotationSpeeds::Medium,
@@ -41,9 +35,13 @@ struct RotationsSpeeds final
 	/** Returns a random speed */
 	static const ERotationSpeeds::Type GetRandom()
 	{
-		const uint8 SpeedIndex = FMath::RandRange(0, RotationsSpeeds::Count() - 1);
+		const uint8 SpeedsNum = RotationsSpeeds::Get().Num();
 
-		return RotationsSpeeds::Get()[SpeedIndex];
+		const uint8 SpeedIndex = FMath::RandRange(0, SpeedsNum - 1);
+
+		bool bValidIndex = SpeedIndex >= 0 && SpeedIndex < SpeedsNum;
+
+		return bValidIndex ? RotationsSpeeds::Get()[SpeedIndex] : ERotationSpeeds::None;
 	}
 
 	RotationsSpeeds(const RotationsSpeeds&) = delete;

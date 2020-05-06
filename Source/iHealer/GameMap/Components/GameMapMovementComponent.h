@@ -19,16 +19,10 @@ namespace EMovementSpeeds
 
 struct MovementSpeeds final
 {
-	/** Returns the number of speeds  */
-	static constexpr int Count()
-	{
-		return 3;
-	}
-
 	/** Returns an array of speeds */
-	static const EMovementSpeeds::Type* Get()
+	static const TArray<EMovementSpeeds::Type> Get()
 	{
-		static const EMovementSpeeds::Type Speeds[]
+		static const TArray<EMovementSpeeds::Type> Speeds
 		{
 			EMovementSpeeds::Normal,
 			EMovementSpeeds::Medium,
@@ -41,9 +35,13 @@ struct MovementSpeeds final
 	/** Returns a random speed */
 	static const EMovementSpeeds::Type GetRandom()
 	{
-		const uint8 SpeedIndex = FMath::RandRange(0, MovementSpeeds::Count() - 1);
+		const uint8 SpeedsNum = MovementSpeeds::Get().Num();
 
-		return MovementSpeeds::Get()[SpeedIndex];
+		const uint8 SpeedIndex = FMath::RandRange(0, SpeedsNum - 1);
+
+		bool bValidIndex = SpeedIndex >= 0 && SpeedIndex < SpeedsNum;
+
+		return bValidIndex ? MovementSpeeds::Get()[SpeedIndex] : EMovementSpeeds::None;
 	}
 
 	MovementSpeeds(const MovementSpeeds&) = delete;
