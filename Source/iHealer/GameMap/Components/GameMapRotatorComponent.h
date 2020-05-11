@@ -33,16 +33,7 @@ struct RotationsSpeeds final
 	}
 
 	/** Returns a random speed */
-	static const ERotationSpeeds::Type GetRandom()
-	{
-		const uint8 SpeedsNum = RotationsSpeeds::Get().Num();
-
-		const uint8 SpeedIndex = FMath::RandRange(0, SpeedsNum - 1);
-
-		const bool bValidIndex = SpeedIndex >= 0 && SpeedIndex < SpeedsNum;
-
-		return bValidIndex ? RotationsSpeeds::Get()[SpeedIndex] : ERotationSpeeds::None;
-	}
+	static const ERotationSpeeds::Type GetRandom();
 
 	RotationsSpeeds(const RotationsSpeeds&) = delete;
 	RotationsSpeeds& operator=(const RotationsSpeeds&) = delete;

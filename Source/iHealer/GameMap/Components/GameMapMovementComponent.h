@@ -33,16 +33,7 @@ struct MovementSpeeds final
 	}
 
 	/** Returns a random speed */
-	static const EMovementSpeeds::Type GetRandom()
-	{
-		const uint8 SpeedsNum = MovementSpeeds::Get().Num();
-
-		const uint8 SpeedIndex = FMath::RandRange(0, SpeedsNum - 1);
-
-		const bool bValidIndex = SpeedIndex >= 0 && SpeedIndex < SpeedsNum;
-
-		return bValidIndex ? MovementSpeeds::Get()[SpeedIndex] : EMovementSpeeds::None;
-	}
+	static const EMovementSpeeds::Type GetRandom();
 
 	MovementSpeeds(const MovementSpeeds&) = delete;
 	MovementSpeeds& operator=(const MovementSpeeds&) = delete;

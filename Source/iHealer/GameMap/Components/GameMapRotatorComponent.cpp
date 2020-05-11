@@ -5,6 +5,17 @@
 #include "GameFramework/Actor.h"
 #include "Containers/StaticArray.h"
 
+const ERotationSpeeds::Type RotationsSpeeds::GetRandom()
+{
+	const uint8 SpeedsNum = RotationsSpeeds::Get().Num();
+
+	const uint8 SpeedIndex = FMath::RandRange(0, SpeedsNum - 1);
+
+	const bool bValidIndex = SpeedIndex >= 0 && SpeedIndex < SpeedsNum;
+
+	return bValidIndex ? RotationsSpeeds::Get()[SpeedIndex] : ERotationSpeeds::None;
+}
+
 // Sets default values for this component's properties
 UGameMapRotatorComponent::UGameMapRotatorComponent()
 {

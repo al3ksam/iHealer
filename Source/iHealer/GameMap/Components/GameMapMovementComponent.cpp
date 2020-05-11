@@ -4,6 +4,17 @@
 #include "GameMapMovementComponent.h"
 #include "GameFramework/Actor.h"
 
+const EMovementSpeeds::Type MovementSpeeds::GetRandom()
+{
+	const uint8 SpeedsNum = MovementSpeeds::Get().Num();
+
+	const uint8 SpeedIndex = FMath::RandRange(0, SpeedsNum - 1);
+
+	const bool bValidIndex = SpeedIndex >= 0 && SpeedIndex < SpeedsNum;
+
+	return bValidIndex ? MovementSpeeds::Get()[SpeedIndex] : EMovementSpeeds::None;
+}
+
 // Sets default values for this component's properties
 UGameMapMovementComponent::UGameMapMovementComponent()
 {
