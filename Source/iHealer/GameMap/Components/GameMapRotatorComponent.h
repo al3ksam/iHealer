@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "iHealer/Interfaces/RotatorInterface.h"
 #include "GameMapRotatorComponent.generated.h"
 
 namespace ERotationSpeeds
@@ -40,9 +39,7 @@ struct RotationsSpeeds final
 };
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
-class IHEALER_API UGameMapRotatorComponent 
-	: public UActorComponent
-	, public IRotatorInterface
+class IHEALER_API UGameMapRotatorComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
@@ -54,9 +51,9 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, 
 		FActorComponentTickFunction* ThisTickFunction) override;
 
-	virtual void StartRotating() override;
-	virtual void StopRotating() override; 
-	virtual bool isRotating() const override; 
+	virtual void StartRotating();
+	virtual void StopRotating(); 
+	virtual bool isRotating() const; 
 
 protected:
 	// Called when the game starts

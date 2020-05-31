@@ -4,15 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
-#include "iHealer/Interfaces/MovementInterface.h"
-#include "iHealer/Interfaces/RotatorInterface.h"
 #include "GameMapVirusPawn.generated.h"
 
 UCLASS()
-class IHEALER_API AGameMapVirusPawn 
-	: public APawn
-	, public IMovementInterface
-	, public IRotatorInterface
+class IHEALER_API AGameMapVirusPawn : public APawn
 {
 	GENERATED_BODY()
 
@@ -27,22 +22,22 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UFUNCTION(BlueprintCallable)
-	virtual void StartMoving() override;
+	virtual void StartMoving();
 
 	UFUNCTION(BlueprintCallable)
-	virtual void StopMoving() override;
+	virtual void StopMoving();
 
 	UFUNCTION(BlueprintCallable)
-	virtual bool isMoving() const override;
+	virtual bool isMoving() const;
 
 	UFUNCTION(BlueprintCallable)
-	virtual void StartRotating() override;
+	virtual void StartRotating();
 
 	UFUNCTION(BlueprintCallable)
-	virtual void StopRotating() override;
+	virtual void StopRotating();
 
 	UFUNCTION(BlueprintCallable)
-	virtual bool isRotating() const override;
+	virtual bool isRotating() const;
 
 	FORCEINLINE class USphereComponent* GetSphereCollision() const { return SphereCollision; }
 	FORCEINLINE class UPaperFlipbookComponent* GetSprite() const { return Sprite; }

@@ -6,13 +6,15 @@
 
 const EMovementSpeeds::Type MovementSpeeds::GetRandom()
 {
-	const uint8 SpeedsNum = MovementSpeeds::Get().Num();
+	const TArray<EMovementSpeeds::Type> Speeds = MovementSpeeds::Get();
+
+	const uint8 SpeedsNum = Speeds.Num();
 
 	const uint8 SpeedIndex = FMath::RandRange(0, SpeedsNum - 1);
 
 	const bool bValidIndex = SpeedIndex >= 0 && SpeedIndex < SpeedsNum;
 
-	return bValidIndex ? MovementSpeeds::Get()[SpeedIndex] : EMovementSpeeds::None;
+	return bValidIndex ? Speeds[SpeedIndex] : EMovementSpeeds::None;
 }
 
 // Sets default values for this component's properties

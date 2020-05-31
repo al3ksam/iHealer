@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "iHealer/Interfaces/MovementInterface.h"
 #include "GameMapMovementComponent.generated.h"
 
 namespace EMovementSpeeds
@@ -40,9 +39,7 @@ struct MovementSpeeds final
 };
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
-class IHEALER_API UGameMapMovementComponent 
-	: public UActorComponent
-	, public IMovementInterface
+class IHEALER_API UGameMapMovementComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
@@ -54,9 +51,9 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, 
 		FActorComponentTickFunction* ThisTickFunction) override;
 
-	virtual void StartMoving() override;
-	virtual void StopMoving() override;
-	virtual bool isMoving() const override;
+	virtual void StartMoving();
+	virtual void StopMoving();
+	virtual bool isMoving() const;
 
 protected:
 	// Called when the game starts
