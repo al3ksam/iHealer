@@ -62,48 +62,6 @@ void AGameMapVirusPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
-void AGameMapVirusPawn::StartMoving()
-{
-	if (Mover != nullptr)
-	{
-		Mover->StartMoving();
-	}
-}
-
-void AGameMapVirusPawn::StopMoving()
-{
-	if (Mover != nullptr)
-	{
-		Mover->StopMoving();
-	}
-}
-
-bool AGameMapVirusPawn::isMoving() const
-{
-	return Mover != nullptr ? Mover->isMoving() : false;
-}
-
-void AGameMapVirusPawn::StartRotating()
-{
-	if (Rotator != nullptr)
-	{
-		Rotator->StartRotating();
-	}
-}
-
-void AGameMapVirusPawn::StopRotating()
-{
-	if (Rotator != nullptr)
-	{
-		Rotator->StopRotating();
-	}
-}
-
-bool AGameMapVirusPawn::isRotating() const
-{
-	return Rotator != nullptr ? Rotator->isRotating() : false;
-}
-
 // Called after the actor's components have been initialized
 void AGameMapVirusPawn::PostInitializeComponents()
 {

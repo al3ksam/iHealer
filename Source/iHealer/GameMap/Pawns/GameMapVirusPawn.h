@@ -21,26 +21,11 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UFUNCTION(BlueprintCallable)
-	virtual void StartMoving();
-
-	UFUNCTION(BlueprintCallable)
-	virtual void StopMoving();
-
-	UFUNCTION(BlueprintCallable)
-	virtual bool isMoving() const;
-
-	UFUNCTION(BlueprintCallable)
-	virtual void StartRotating();
-
-	UFUNCTION(BlueprintCallable)
-	virtual void StopRotating();
-
-	UFUNCTION(BlueprintCallable)
-	virtual bool isRotating() const;
-
 	FORCEINLINE class USphereComponent* GetSphereCollision() const { return SphereCollision; }
 	FORCEINLINE class UPaperFlipbookComponent* GetSprite() const { return Sprite; }
+
+	FORCEINLINE class UGameMapMovementComponent* GetMoverComponent() const { return Mover; }
+	FORCEINLINE class UGameMapRotatorComponent* GetRotatorComponent() const { return Rotator; }
 
 protected:
 	// Called after the actor's components have been initialized
