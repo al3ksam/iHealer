@@ -28,9 +28,7 @@ void AGameMapVirusAIController::OnPossess(APawn* InPawn)
 	UGameMapRotatorComponent* VirusRotatorComponent = Virus->GetRotatorComponent();
 	UGameMapMovementComponent* VirusMoverComponent = Virus->GetMoverComponent();
 
-	bool bLoadedComponents = VirusRotatorComponent != nullptr && VirusMoverComponent != nullptr;
-
-	if (bLoadedComponents)
+	if (VirusRotatorComponent != nullptr && VirusMoverComponent != nullptr)
 	{
 		VirusRotatorComponent->StartRotating();
 		VirusMoverComponent->StartMoving();
@@ -47,9 +45,7 @@ void AGameMapVirusAIController::OnUnPossess()
 	UGameMapRotatorComponent* VirusRotatorComponent = Virus->GetRotatorComponent();
 	UGameMapMovementComponent* VirusMoverComponent = Virus->GetMoverComponent();
 
-	bool bLoadedComponents = VirusRotatorComponent != nullptr && VirusMoverComponent != nullptr;
-
-	if (bLoadedComponents)
+	if (VirusRotatorComponent != nullptr && VirusMoverComponent != nullptr)
 	{
 		VirusRotatorComponent->StopRotating();
 		VirusMoverComponent->StopMoving();
